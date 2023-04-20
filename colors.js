@@ -1,5 +1,5 @@
-const size = 8;
-const step = 25;
+const size = 6;
+const step = 30;
 
 let r = Math.floor(Math.random()*255);
 let g = Math.floor(Math.random()*255);
