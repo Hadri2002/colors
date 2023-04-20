@@ -1,13 +1,35 @@
-const size = 9;
+const size = 8;
+const step = 25;
 
 let r = Math.floor(Math.random()*255);
 let g = Math.floor(Math.random()*255);
 let b = Math.floor(Math.random()*255);
+
+function colorIsGood(color){
+    if(color < 128){
+        while((255 - color) < size*step){
+            color = Math.floor(Math.random()*255);
+            console.log("Váltottam!" + color)
+        }
+    }
+    else{
+        while(color < size*step){
+            color = Math.floor(Math.random()*255);
+            console.log("Váltottam!" + color);
+        }
+    } 
+    return color;  
+}
+
+r = colorIsGood(r);
+g = colorIsGood(g);
+b = colorIsGood(b);
+
 //meg kéne nézni hogy a létrehozott színből kijöhet-e egyáltalán az átmenet
 
 function getdif(color){
     let dif;
-    if(color < 255-(size*15)){
+    if(color < 255-(size*step)){
         dif = 255-color;
         console.log(color + " Kisebb voltam 180-nál");
         //felfele megyek
@@ -21,17 +43,13 @@ function getdif(color){
     let amount; 
     
     if(dif > 0){
-        amount = size*15 + Math.floor(Math.random()*(dif-size*15));
+        amount = (size*step) + Math.floor(Math.random()*(dif-(size*step)));
         console.log("Eredeti amount:" + amount);
-        /*while(amount < size*15){
-            amount = size*15 + Math.floor(Math.random()*(dif-75));
-            console.log("Változtatott amount:" + amount);
-        }*/
     }
     else{
-        amount = size*-15 + Math.floor(Math.random()*(dif+size*15));
-
+        amount = -1*size*step + Math.floor(Math.random()*(dif+(size*step)));
         console.log("Eredeti amount:" + amount);
+
         /*while(amount > size*-15){
         amount = -size*15 + Math.floor(Math.random()*(dif+75));
         console.log("Változtatott amount:" + amount);
