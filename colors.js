@@ -1,27 +1,27 @@
-const size = 7;
+const size = 9;
 
 let r = Math.floor(Math.random()*255);
 let g = Math.floor(Math.random()*255);
 let b = Math.floor(Math.random()*255);
-//document.querySelector('body').style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+//meg kéne nézni hogy a létrehozott színből kijöhet-e egyáltalán az átmenet
 
 function getdif(color){
     let dif;
-    if(color < 255-size*15){
+    if(color < 255-(size*15)){
         dif = 255-color;
-        console.log(color + "Kisebb voltam 180-nál");
+        console.log(color + " Kisebb voltam 180-nál");
         //felfele megyek
     }
     else{
         dif = -1 * color;
-        console.log(color + "Nagyobb voltam 180-nál");
+        console.log(color + " Nagyobb voltam 180-nál");
         //lefele megyek
     }
     console.log("dif:" + dif);
     let amount; 
     
     if(dif > 0){
-        amount = size*15 + Math.floor(Math.random()*(dif-75));
+        amount = size*15 + Math.floor(Math.random()*(dif-size*15));
         console.log("Eredeti amount:" + amount);
         /*while(amount < size*15){
             amount = size*15 + Math.floor(Math.random()*(dif-75));
@@ -29,7 +29,7 @@ function getdif(color){
         }*/
     }
     else{
-        amount = -size*15 + Math.floor(Math.random()*(dif+75));
+        amount = size*-15 + Math.floor(Math.random()*(dif+size*15));
 
         console.log("Eredeti amount:" + amount);
         /*while(amount > size*-15){
@@ -38,6 +38,7 @@ function getdif(color){
     }*/
     }
     amount = Math.floor(amount / size);
+    console.log("Final amount: " + amount);
     //console.log(color);
     //console.log(amount);
     return amount;
