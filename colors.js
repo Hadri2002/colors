@@ -1,4 +1,4 @@
-const size = 7;
+const size = 10;
 
 let r = Math.floor(Math.random()*255);
 let g = Math.floor(Math.random()*255);

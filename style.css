@@ -1,5 +1,8 @@
 .picture-matching-container{
     width: 100%;
+    text-align: center;
+    align-items: center;
+    float: inherit;
 }
 
 .picture-matching-ghost{
@@ -10,6 +13,9 @@
     height: 100%;
     padding-bottom: 100%;
     position:relative;
+    text-align: center;
+    align-items: center;
+    float: inherit;
 }
 
 .picture-matching-grid{
@@ -17,7 +23,7 @@
     top: 0;
     left: 0;
     display: grid;
-    width: 70%;
-    height: 70%;
+    width: 40%;
+    height: 40%;
     background-color: beige;
 }
