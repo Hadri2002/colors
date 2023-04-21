@@ -1,4 +1,4 @@
-const size = 10;
+const size = 12;
 const step = 20;
 
 let r = Math.floor(Math.random()*255);
@@ -9,54 +9,23 @@ console.log(r);
 console.log(g);
 console.log(b);
 
-function colorIsGood(color){
-    if(color < 128){
-        while((255 - color) < size*step){
-            
-        }
-    }
-    else{
-        while(color < size*step){
-            color = Math.floor(Math.random()*255);
-            console.log("Váltottam!" + color);
-        }
-    } 
-    return color;  
-}
-
-function colorGood(color){
+function colorCheck(color){
     console.log("Bevett szín: " + color);
-    if(color < 128){
-        if((255 - color) < size*step){
-            color = Math.floor(Math.random()*255);
-            console.log("Váltottam!" + color)
-            colorGood(color);
-        }
-        else {
-            console.log("Amit visszaadnék: " + color);
-            return color;}
+    if(color < 255 - (size*step) || color > size*step){
+        console.log("Visszaadom: " + color);
+        return color;
     }
-    else{
-        if(color < size*step){
-            color = Math.floor(Math.random()*255);
-            console.log("Váltottam!" + color);
-            colorGood(color);
-        }
-        else {
-            console.log("Amit visszaadnék: " + color);
-            return color;}
+    else {
+        color = Math.floor(Math.random()*255);
+        console.log("Váltottam!" + color);
+        color = colorCheck(color);
     }
     return color;
 }
 
-r = colorGood(r);
-g = colorGood(g);
-b = colorGood(b);
-
-//console.log("Colorgood:" + colorGood(r));
-//console.log("Colorgood:" +colorGood(g));
-//console.log("Colorgood:" +colorGood(b));
-
+r = colorCheck(r);
+g = colorCheck(g);
+b = colorCheck(b);
 
 function getdif(color){
     let dif;
@@ -109,23 +78,6 @@ for(let i = 0; i < size; i++){
     }
 }
 
-
-
-function isSame(color1, index){
-    for(let i = 0; i < colors.length; i++){
-        if(i != index){
-            if(color1[0] == colors[i][0] && color1[1] == colors[i][1] && color1[2] == colors[i][2]){
-                console.log("UGYANAZ A SZÍN!" + color1 + colors[i]);
-            }
-        }
-    }
-}
-
-for(let i = 0; i < colors.length; i++){
-    isSame(colors[i], i);
-    console.log("Ellenőrzöm a " + colors[i] + " színt");
-}
-
 const containerElem = document.createElement('div');
         containerElem.className = "picture-matching-container";
 
@@ -144,4 +96,14 @@ document.querySelector('body').appendChild(containerElem);
 for(let i = 0; i < colors.length; i++){
     this.gridElem.appendChild(document.createElement('div'));
     this.gridElem.lastChild.style.backgroundColor = `rgb(${colors[i][0]}, ${colors[i][1]}, ${colors[i][2]})`;
+}
+
+for(let i = 0; i < colors.length; i++){
+    for(let j = 0; j < colors.length; j++){
+        if(i != j){
+            if(this.gridElem.childNodes[i].style.backgroundColor == this.gridElem.childNodes[j].style.backgroundColor){
+                console.log("UGYANAZ!");
+            }
+        }
+    }
 }
