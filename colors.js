@@ -1,9 +1,13 @@
-const size = 12;
+const size = 10;
 const step = 20;
 
 let r = Math.floor(Math.random()*255);
 let g = Math.floor(Math.random()*255);
 let b = Math.floor(Math.random()*255);
+
+console.log(r);
+console.log(g);
+console.log(b);
 
 function colorIsGood(color){
     if(color < 128){
@@ -21,13 +25,16 @@ function colorIsGood(color){
 }
 
 function colorGood(color){
+    console.log("Bevett szín: " + color);
     if(color < 128){
         if((255 - color) < size*step){
             color = Math.floor(Math.random()*255);
             console.log("Váltottam!" + color)
             colorGood(color);
         }
-        else return color;
+        else {
+            console.log("Amit visszaadnék: " + color);
+            return color;}
     }
     else{
         if(color < size*step){
@@ -35,18 +42,25 @@ function colorGood(color){
             console.log("Váltottam!" + color);
             colorGood(color);
         }
-        else return color;
+        else {
+            console.log("Amit visszaadnék: " + color);
+            return color;}
     }
+    return color;
 }
 
 r = colorGood(r);
 g = colorGood(g);
 b = colorGood(b);
 
+//console.log("Colorgood:" + colorGood(r));
+//console.log("Colorgood:" +colorGood(g));
+//console.log("Colorgood:" +colorGood(b));
+
 
 function getdif(color){
     let dif;
-    if(color <= 255-(size*step)){
+    if(color < 255-(size*step)){
         dif = 255-color;
         console.log(color + " Kisebb voltam 180-nál");
         //felfele megyek
@@ -96,6 +110,21 @@ for(let i = 0; i < size; i++){
 }
 
 
+
+function isSame(color1, index){
+    for(let i = 0; i < colors.length; i++){
+        if(i != index){
+            if(color1[0] == colors[i][0] && color1[1] == colors[i][1] && color1[2] == colors[i][2]){
+                console.log("UGYANAZ A SZÍN!" + color1 + colors[i]);
+            }
+        }
+    }
+}
+
+for(let i = 0; i < colors.length; i++){
+    isSame(colors[i], i);
+    console.log("Ellenőrzöm a " + colors[i] + " színt");
+}
 
 const containerElem = document.createElement('div');
         containerElem.className = "picture-matching-container";
