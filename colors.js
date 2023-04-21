@@ -1,5 +1,5 @@
-const size = 6;
-const step = 30;
+const size = 8;
+const step = 20;
 
 let r = Math.floor(Math.random()*255);
 let g = Math.floor(Math.random()*255);
@@ -25,7 +25,6 @@ r = colorIsGood(r);
 g = colorIsGood(g);
 b = colorIsGood(b);
 
-//meg kéne nézni hogy a létrehozott színből kijöhet-e egyáltalán az átmenet
 
 function getdif(color){
     let dif;
@@ -49,16 +48,10 @@ function getdif(color){
     else{
         amount = -1*size*step + Math.floor(Math.random()*(dif+(size*step)));
         console.log("Eredeti amount:" + amount);
-
-        /*while(amount > size*-15){
-        amount = -size*15 + Math.floor(Math.random()*(dif+75));
-        console.log("Változtatott amount:" + amount);
-    }*/
     }
     amount = Math.floor(amount / size);
     console.log("Final amount: " + amount);
-    //console.log(color);
-    //console.log(amount);
+
     return amount;
 }
 
@@ -74,7 +67,7 @@ for(let i = 0; i < size; i++){
         let ract = r + (i * rdif)
         let bact = b + (j * bdif);
         let gact;
-        if(i < j){
+        if(i <= j){
             gact = g + (j * gdif)
         }
         else{
