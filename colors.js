@@ -1,4 +1,4 @@
-const size = 8;
+const size = 12;
 const step = 20;
 
 let r = Math.floor(Math.random()*255);
@@ -8,8 +8,7 @@ let b = Math.floor(Math.random()*255);
 function colorIsGood(color){
     if(color < 128){
         while((255 - color) < size*step){
-            color = Math.floor(Math.random()*255);
-            console.log("Váltottam!" + color)
+            
         }
     }
     else{
@@ -21,14 +20,33 @@ function colorIsGood(color){
     return color;  
 }
 
-r = colorIsGood(r);
-g = colorIsGood(g);
-b = colorIsGood(b);
+function colorGood(color){
+    if(color < 128){
+        if((255 - color) < size*step){
+            color = Math.floor(Math.random()*255);
+            console.log("Váltottam!" + color)
+            colorGood(color);
+        }
+        else return color;
+    }
+    else{
+        if(color < size*step){
+            color = Math.floor(Math.random()*255);
+            console.log("Váltottam!" + color);
+            colorGood(color);
+        }
+        else return color;
+    }
+}
+
+r = colorGood(r);
+g = colorGood(g);
+b = colorGood(b);
 
 
 function getdif(color){
     let dif;
-    if(color < 255-(size*step)){
+    if(color <= 255-(size*step)){
         dif = 255-color;
         console.log(color + " Kisebb voltam 180-nál");
         //felfele megyek
@@ -67,7 +85,7 @@ for(let i = 0; i < size; i++){
         let ract = r + (i * rdif)
         let bact = b + (j * bdif);
         let gact;
-        if(i <= j){
+        if(i < j){
             gact = g + (j * gdif)
         }
         else{
