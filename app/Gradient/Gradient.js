@@ -144,17 +144,13 @@ export default class Gradient extends Application{
     }
 
     onColorChosen(evt) {
-        console.log("Chosen: " + Gradient.chosen);
         if(Gradient.chosen){
 
-            console.log(evt.detail.children);
             //THIS DOESNT WORK YET
             let place1 = evt.detail.actualPlace;
             let place2 = Gradient.chosen.actualPlace;
             let item1 = evt.detail.color;
             let item2 = Gradient.chosen;
-            console.log(place1);
-            console.log(place2);
             if(place1 >= place2) {
                 let temp = place1;
                 item1 = Gradient.chosen;
@@ -178,7 +174,6 @@ export default class Gradient extends Application{
                 }
                 else{
                     evt.detail.grid.appendChild(children.item(i));
-                    //console.log(children.item(i));
                 }
             }
             
@@ -204,7 +199,6 @@ export default class Gradient extends Application{
             //There is no chosen color
             Gradient.chosen = evt.detail.color;
             Gradient.chosen.domElem.style.border = 'solid 1px white';
-            console.log("Chose for the first time: " + Gradient.chosen);
         }
     }
 }
