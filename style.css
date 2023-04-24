@@ -1,11 +1,11 @@
-.picture-matching-container{
+.gradient-container{
     width: 100%;
     text-align: center;
     align-items: center;
     float: inherit;
 }
 
-.picture-matching-ghost{
+.gradient-ghost{
     margin: 10px;
     text-align: center;
     align-items: center;
@@ -18,7 +18,7 @@
     float: inherit;
 }
 
-.picture-matching-grid{
+.gradient-grid{
     position: absolute;
     top: 0;
     left: 0;
