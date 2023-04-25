@@ -1,7 +1,7 @@
 import Application from "../Application.js";
 
 export default class Gradient extends Application{
-    static size = 5;
+    static size = 12;
     static step = 20;
     static colors = [];
 
