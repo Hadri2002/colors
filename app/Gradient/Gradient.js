@@ -1,7 +1,7 @@
 import Application from "../Application.js";
 
 export default class Gradient extends Application{
-    static size = 5;
+    static size = 12;
     static step = 20;
     static colors = [];
 
@@ -87,8 +87,10 @@ export default class Gradient extends Application{
             }
         }
 
-        //shuffle colors
+        this.shuffleColors(randomColors, fixedColors);
+    }
 
+    shuffleColors(randomColors, fixedColors){
         for (let i = randomColors.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [randomColors[i], randomColors[j]] = [randomColors[j], randomColors[i]];
@@ -134,18 +136,20 @@ export default class Gradient extends Application{
 
     onColorChosen(evt) {
         if(Gradient.chosen){
-            //should make it prettier
+            //needs cleanup
 
             let place1 = evt.detail.actualPlace;
             let place2 = Gradient.chosen.actualPlace;
             let item1 = evt.detail.color;
             let item2 = Gradient.chosen;
             if(place1 >= place2) {
-                let temp = place1;
-                item1 = Gradient.chosen;
-                item2 = evt.detail.color;
-                place1 = place2;
-                place2 = temp;
+                [item1, item2] = [item2, item1];
+                //let temp = place1;
+                //item1 = Gradient.chosen;
+                //item2 = evt.detail.color;
+                [place1, place2] = [place2, place1];
+                //place1 = place2;
+                //place2 = temp;
             }
             //Place1 is smaller
 
