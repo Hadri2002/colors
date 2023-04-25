@@ -136,7 +136,6 @@ export default class Gradient extends Application{
 
     onColorChosen(evt) {
         if(Gradient.chosen){
-            //needs cleanup
 
             let place1 = evt.detail.actualPlace;
             let place2 = Gradient.chosen.actualPlace;
@@ -144,12 +143,8 @@ export default class Gradient extends Application{
             let item2 = Gradient.chosen;
             if(place1 >= place2) {
                 [item1, item2] = [item2, item1];
-                //let temp = place1;
-                //item1 = Gradient.chosen;
-                //item2 = evt.detail.color;
                 [place1, place2] = [place2, place1];
-                //place1 = place2;
-                //place2 = temp;
+
             }
             //Place1 is smaller
 
