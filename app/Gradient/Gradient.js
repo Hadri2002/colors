@@ -30,10 +30,8 @@ export default class Gradient extends Application{
     initStart(){
 
         const startContainer = document.createElement('div');
+        this.target.appendChild(startContainer);  
         startContainer.className = "chooser";
-
-        /*startContainer.appendChild(document.createElement('div'));
-        startContainer.lastChild.className = "chooser-states";*/
 
         const difficulty = ['Easy', 'Medium', 'Hard'];
         const radio = document.createElement('div');
@@ -69,8 +67,14 @@ export default class Gradient extends Application{
                 
         startContainer.appendChild(document.createElement('button'));
         startContainer.lastChild.innerHTML = "Start";
+        startContainer.lastChild.addEventListener('click', function(evt){
+            this.target.innerHTML = "";
+            this.initDom();
+            //set the size of the grid based on the correct values
+            //give the difficulty to initColors
+            this.initColors();
+        }.bind(this));
         
-        this.target.appendChild(startContainer);  
     }
 
     initDom(){
