@@ -41,15 +41,29 @@ export default class Gradient extends Application{
 
         const radio = document.createElement('div');
         
-        radio.innerHTML = sizes.map((size) => `<div>
-                <input type="radio" name="size" value="${size}" id="${size}">
-                 <label for="${size}">${size}</label>
-            </div>`).join(' ');
+        radio.innerHTML = 
+            (`<label class="radio">
+                <input type="radio" checked="checked" name="${sizes[0]}">
+                <span class="checkmark"></span>
+                ${sizes[0]}
+            </label>
+            <label class="radio">
+                <input type="radio" name="${sizes[1]}">
+                <span class="checkmark"></span>
+                ${sizes[1]}
+            </label>
+            <label class="radio">
+                <input type="radio" name="${sizes[2]}">
+                <span class="checkmark"></span>
+                ${sizes[2]}
+            </label>`);
         containerElem.lastChild.appendChild(radio);
         containerElem.lastChild.lastChild.className = "radio";
 
         const range = document.createElement('div');
         
+        
+
         range.innerHTML =  `<div>
                 <input type="range" name="size" value="5" min="5" max="12">
                  <label for="why">Méret</label>
