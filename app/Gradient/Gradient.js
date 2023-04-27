@@ -1,7 +1,8 @@
 import Application from "../Application.js";
 
 export default class Gradient extends Application{
-    static size = 4;
+
+    static size = 12;
     static step = 20;
     static colors = [];
 
@@ -100,6 +101,7 @@ export default class Gradient extends Application{
 
         this.target.appendChild(containerElem);
 
+        //Lock game on win condition
         this.gridElem.addEventListener('click', function(evt) {
             if (this.locked) {
                 console.log('Grid is locked');
@@ -110,13 +112,9 @@ export default class Gradient extends Application{
     }
 
     initColors(){
-        let r = Math.floor(Math.random()*255);
-        let g = Math.floor(Math.random()*255);
-        let b = Math.floor(Math.random()*255);
-
-        r = this.colorCheck(r);
-        g = this.colorCheck(g);
-        b = this.colorCheck(b);
+        let r = this.colorCheck(Math.floor(Math.random()*256));
+        let g = this.colorCheck(Math.floor(Math.random()*256));
+        let b = this.colorCheck(Math.floor(Math.random()*256));
 
         const rdif = this.getdif(r);
         const gdif = this.getdif(g);
@@ -138,6 +136,7 @@ export default class Gradient extends Application{
                 Gradient.colors.push(color);         
                 color.domElem.addEventListener('choose', this.onColorChosen.bind(this));       
 
+                //Determines fixed points, this is where difficulty can be implemented
                 if(i == 0 || j == 0 || i == Gradient.size-1 || j == Gradient.size - 1){
                     color.fixed = true;
                     fixedColors.push(color);
@@ -146,8 +145,10 @@ export default class Gradient extends Application{
             }
         }
 
-        //shuffle colors
+        this.shuffleColors(randomColors, fixedColors);
+    }
 
+    shuffleColors(randomColors, fixedColors){
         for (let i = randomColors.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
             [randomColors[i], randomColors[j]] = [randomColors[j], randomColors[i]];
@@ -163,15 +164,11 @@ export default class Gradient extends Application{
                 randomColors[randomColors.length-1].actualPlace = i;
                 this.gridElem.appendChild(randomColors.pop().domElem);
             }
-        
         }
-    
     }
 
     colorCheck(color){
-        if(color < 255 - (Gradient.size*Gradient.step) || color > Gradient.size*Gradient.step){
-            return color;
-        }
+        if(color < 255 - (Gradient.size*Gradient.step) || color > Gradient.size*Gradient.step) return color;
         else {
             color = Math.floor(Math.random()*255);
             color = this.colorCheck(color);
@@ -181,39 +178,31 @@ export default class Gradient extends Application{
 
     getdif(color){
         let dif;
-        if(color < 255-(Gradient.size*Gradient.step)){
-            dif = 255-color;
-        }
-        else{
-            dif = -1 * color;
-        }
+        if(color < 255-(Gradient.size*Gradient.step)) dif = 255-color;
+        else dif = -1 * color;
+        
         let amount; 
         
-        if(dif > 0){
+        if(dif > 0)
             amount = (Gradient.size*Gradient.step) + Math.floor(Math.random()*(dif-(Gradient.size*Gradient.step)));
-        }
-        else{
+        else
             amount = -1*Gradient.size*Gradient.step + Math.floor(Math.random()*(dif+(Gradient.size*Gradient.step)));
-        }
+        
         amount = Math.floor(amount / Gradient.size);
-
         return amount;
     }
 
     onColorChosen(evt) {
         if(Gradient.chosen){
 
-            //THIS DOESNT WORK YET
             let place1 = evt.detail.actualPlace;
             let place2 = Gradient.chosen.actualPlace;
             let item1 = evt.detail.color;
             let item2 = Gradient.chosen;
             if(place1 >= place2) {
-                let temp = place1;
-                item1 = Gradient.chosen;
-                item2 = evt.detail.color;
-                place1 = place2;
-                place2 = temp;
+                [item1, item2] = [item2, item1];
+                [place1, place2] = [place2, place1];
+
             }
             //Place1 is smaller
 
@@ -229,9 +218,8 @@ export default class Gradient extends Application{
                     evt.detail.grid.appendChild(item1.domElem);
                     item1.actualPlace = i;
                 }
-                else{
+                else
                     evt.detail.grid.appendChild(children.item(i));
-                }
             }
             
             Gradient.chosen.domElem.style.border = 'none';
@@ -239,11 +227,9 @@ export default class Gradient extends Application{
 
             //check if the game is finished
             let i;
-
             for(i = 0; i < Gradient.colors.length; i++){
-                if(Gradient.colors[i].actualPlace != Gradient.colors[i].place){
+                if(Gradient.colors[i].actualPlace != Gradient.colors[i].place)
                     break;
-                }
             }
 
             if(i == Gradient.colors.length){
@@ -267,7 +253,7 @@ export default class Gradient extends Application{
             }
         }
         else{
-            //There is no chosen color
+            //There is no chosen color yet
             Gradient.chosen = evt.detail.color;
             Gradient.chosen.domElem.style.border = 'solid 1px white';
         }
@@ -276,13 +262,14 @@ export default class Gradient extends Application{
 
 class Color{
 
+    //where it currently is after shuffling
     actualPlace;
 
     constructor(row, col, rgb){
         this.row = row;
         this.col = col;
         this.rgb = rgb;
-        //ez a helyes elhelyezkedése, nem pedig az aktuális!!
+        //where it should be in the gradient
         this.place = (row * Gradient.size) + col;
         this.fixed = false;
 
@@ -298,14 +285,12 @@ class Color{
     }
 
     choose() {
+        //we can only choose a colour if it's not one of the fixed ones!
         if(this.fixed == false){            
-
             const eventObj = new CustomEvent('choose', {
                 detail: {
                     color: this,
-                    chosen: this.chosen,
                     grid: this.domElem.parentElement,
-                    children: this.domElem.parentNode.childNodes,
                     actualPlace: this.actualPlace
                 }
             });
