@@ -6,6 +6,20 @@ body {
     overflow-y:hidden;
 }
 
+center {
+    position: absolute;
+    background-color: #00bfa5;
+    left:  30%;
+    right: 30%;
+    bottom:30%;
+    top: 30%;
+    margin:10px;
+    padding:10px;
+    color: white;
+    font-size: large;
+    z-index: 9;
+  }
+
 .nav-item{
     box-shadow:1px 1px 5px 2px #68ffff15;
     margin: 10px;
@@ -27,6 +41,19 @@ a{
   a:active {
     color: rgb(0, 157, 255);
     transition: all 0.5s ease-in;
+  }
+
+  .Button{
+    background-color: #202020;
+    color: rgb(44, 178, 178);
+    box-shadow:1px 1px 5px 2px #68ffff15;
+    width: 50px;
+    height: 35px;
+    margin: 10px;
+    border-radius: 15px;
+    text-align: center;
+    align-items: center;
+    border: 0;
   }
 
 .gradient-container{

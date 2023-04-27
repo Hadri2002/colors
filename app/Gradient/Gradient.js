@@ -1,7 +1,7 @@
 import Application from "../Application.js";
 
 export default class Gradient extends Application{
-    static size = 12;
+    static size = 4;
     static step = 20;
     static colors = [];
 
@@ -22,8 +22,50 @@ export default class Gradient extends Application{
 
     init() {
         super.init();
-        this.initDom();
-        this.initColors();
+        this.initStart();
+        //this.initColors();
+    }
+
+    initStart(){
+
+        const containerElem = document.createElement('div');
+        containerElem.className = "Choser";
+
+        containerElem.appendChild(document.createElement('div'));
+        containerElem.lastChild.className = "Choser-states";
+
+        const sizes = ['Könnyű', 'Közepes', 'Nehéz'];
+        
+        //containerElem.lastChild.appendChild(document.createElement('div'));
+        //containerElem.lastChild.lastChild.className = "radio-size";
+
+        const radio = document.createElement('div');
+        
+        radio.innerHTML = sizes.map((size) => `<div>
+                <input type="radio" name="size" value="${size}" id="${size}">
+                 <label for="${size}">${size}</label>
+            </div>`).join(' ');
+        containerElem.lastChild.appendChild(radio);
+        containerElem.lastChild.lastChild.className = "radio";
+
+        const range = document.createElement('div');
+        
+        range.innerHTML =  `<div>
+                <input type="range" name="size" value="5" min="5" max="12">
+                 <label for="why">Méret</label>
+            </div>`;
+        containerElem.lastChild.appendChild(range);
+        containerElem.lastChild.lastChild.className = "range";
+
+        const createButton= document.createElement('button');
+        containerElem.lastChild.appendChild(createButton);
+        createButton.innerText= 'Start';
+        containerElem.lastChild.lastChild.className = "Button";
+        
+        
+        this.target.appendChild(containerElem);
+        
+        
     }
 
     initDom(){
@@ -36,6 +78,7 @@ export default class Gradient extends Application{
 
         containerElem.lastChild.appendChild(document.createElement('div'));
         containerElem.lastChild.lastChild.className = "gradient-grid";
+        
         
         this.gridElem = containerElem.lastChild.lastChild;
         this.gridElem.style.gridTemplateColumns = `repeat(${Gradient.size}, 1fr)`;
@@ -191,9 +234,23 @@ export default class Gradient extends Application{
 
             if(i == Gradient.colors.length){
                 console.log("nyertél!");
-                this.locked = true;
-            }
+                
+                //confirm("Nyertél")
+                
+                document.getElementsByClassName("text").id= "center";
+                document.getElementsByClassName("text").innerHtml = "Nyertél";
 
+
+                this.locked = true;
+
+/*
+                if (confirm("Nyertél")) {
+                    location.reload()
+                } else {
+                    location.reload()
+                }*/
+
+            }
         }
         else{
             //There is no chosen color
