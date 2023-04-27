@@ -160,3 +160,8 @@ a{
     justify-content: space-evenly;
     align-content: space-evenly;
 }
+.color-guess{
+  display: flex;
+  width: 50vw;
+  height: 100vh;
+}
