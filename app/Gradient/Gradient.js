@@ -2,7 +2,7 @@ import Application from "../Application.js";
 
 export default class Gradient extends Application{
 
-    static size = 12;
+    static size;
     static step = 20;
     static colors = [];
 
@@ -69,10 +69,10 @@ export default class Gradient extends Application{
         startContainer.lastChild.innerHTML = "Start";
         startContainer.lastChild.addEventListener('click', function(evt){
             this.target.innerHTML = "";
+            Gradient.size = sizing.querySelector('input').value;
             this.initDom();
-            //set the size of the grid based on the correct values
             //give the difficulty to initColors
-            this.initColors();
+            this.initColors(radio.querySelector(('input[name="difficulty"]:checked')).id);
         }.bind(this));
         
     }
@@ -105,7 +105,7 @@ export default class Gradient extends Application{
 
     }
 
-    initColors(){
+    initColors(difficulty){
         let r = this.colorCheck(Math.floor(Math.random()*256));
         let g = this.colorCheck(Math.floor(Math.random()*256));
         let b = this.colorCheck(Math.floor(Math.random()*256));
@@ -131,11 +131,28 @@ export default class Gradient extends Application{
                 color.domElem.addEventListener('choose', this.onColorChosen.bind(this));       
 
                 //Determines fixed points, this is where difficulty can be implemented
-                if(i == 0 || j == 0 || i == Gradient.size-1 || j == Gradient.size - 1){
+                if(difficulty == 'easy'){
+                    if(i == 0 || j == 0 || i == Gradient.size-1 || j == Gradient.size - 1){
                     color.fixed = true;
                     fixedColors.push(color);
+                    }
+                    else randomColors.push(color);
                 }
-                else randomColors.push(color);
+                else if(difficulty == 'medium'){
+                    if((i == 0 || i == Gradient.size-1) && (j == 0 || j == Gradient.size - 1)){
+                        color.fixed = true;
+                        fixedColors.push(color);
+                        }
+                        else randomColors.push(color);
+                }
+                else{
+                    if((i == 0 && j == 0) || (i == Gradient.size-1 && j == Gradient.size - 1)){
+                        color.fixed = true;
+                        fixedColors.push(color);
+                        }
+                        else randomColors.push(color);
+                }
+                
             }
         }
 
