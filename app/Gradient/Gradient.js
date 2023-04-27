@@ -29,58 +29,48 @@ export default class Gradient extends Application{
 
     initStart(){
 
-        const containerElem = document.createElement('div');
-        containerElem.className = "Choser";
+        const startContainer = document.createElement('div');
+        startContainer.className = "chooser";
 
-        containerElem.appendChild(document.createElement('div'));
-        containerElem.lastChild.className = "Choser-states";
+        /*startContainer.appendChild(document.createElement('div'));
+        startContainer.lastChild.className = "chooser-states";*/
 
-        const sizes = ['Könnyű', 'Közepes', 'Nehéz'];
-        
-        //containerElem.lastChild.appendChild(document.createElement('div'));
-        //containerElem.lastChild.lastChild.className = "radio-size";
-
+        const difficulty = ['Easy', 'Medium', 'Hard'];
         const radio = document.createElement('div');
-        
-        radio.innerHTML = 
-            (`<label class="radio">
-                <input type="radio" checked="checked" name="${sizes[0]}">
-                <span class="checkmark"></span>
-                ${sizes[0]}
-            </label>
-            <label class="radio">
-                <input type="radio" name="${sizes[1]}">
-                <span class="checkmark"></span>
-                ${sizes[1]}
-            </label>
-            <label class="radio">
-                <input type="radio" name="${sizes[2]}">
-                <span class="checkmark"></span>
-                ${sizes[2]}
-            </label>`);
-        containerElem.lastChild.appendChild(radio);
-        containerElem.lastChild.lastChild.className = "radio";
+        startContainer.appendChild(radio);
 
-        const range = document.createElement('div');
-        
-        
+        for(let diff of difficulty){
+            radio.appendChild(document.createElement('label'));
+            radio.lastChild.className = "radio";
+            radio.lastChild.appendChild(document.createElement('input'));
+            radio.lastChild.lastChild.type = "radio";
+            if(diff == 'Easy') radio.lastChild.lastChild.checked = "checked";
+            radio.lastChild.lastChild.name = "difficulty";
+            radio.lastChild.lastChild.id = diff.toLowerCase();
+            radio.lastChild.appendChild(document.createElement('span'));
+            radio.lastChild.lastChild.className = "checkmark";
+            radio.lastChild.appendChild(document.createElement('label'));
+            radio.lastChild.lastChild.setAttribute('for', diff.toLowerCase(0));
+            radio.lastChild.lastChild.innerHTML = diff;
+        }
 
-        range.innerHTML =  `<div>
-                <input type="range" name="size" value="5" min="5" max="12">
-                 <label for="why">Méret</label>
-            </div>`;
-        containerElem.lastChild.appendChild(range);
-        containerElem.lastChild.lastChild.className = "range";
-
-        const createButton= document.createElement('button');
-        containerElem.lastChild.appendChild(createButton);
-        createButton.innerText= 'Start';
-        containerElem.lastChild.lastChild.className = "Button";
+        const sizing = document.createElement('div');
+        startContainer.appendChild(sizing);
+ 
+        sizing.appendChild(document.createElement('input'));
+        sizing.lastChild.type = "range";
+        sizing.lastChild.name = "sizing";
+        sizing.lastChild.value = "5";
+        sizing.lastChild.min = "5";
+        sizing.lastChild.max = "12";
+        sizing.appendChild(document.createElement('label'));
+        sizing.lastChild.setAttribute('for', 'sizing');
+        sizing.lastChild.innerHTML = "Size";
+                
+        startContainer.appendChild(document.createElement('button'));
+        startContainer.lastChild.innerHTML = "Start";
         
-        
-        this.target.appendChild(containerElem);
-        
-        
+        this.target.appendChild(startContainer);  
     }
 
     initDom(){
