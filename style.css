@@ -161,7 +161,17 @@ a{
     align-content: space-evenly;
 }
 .color-guess{
-  display: flex;
+  display: flexbox;
   width: 50vw;
-  height: 100vh;
+  height: 72vh;
+}
+.color-guesses{
+  display: flexbox;
+  float: right;
+  width: 50vw;
+  height: 72vh;
+}
+
+.guess-input{
+  display: flex;
 }
