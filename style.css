@@ -216,4 +216,10 @@ img{
 
 .guess-input{
   display: flex;
+  justify-content: center;
+  padding-top: 20px;
+}
+
+.guess-container{
+  padding-top: 20px;
 }

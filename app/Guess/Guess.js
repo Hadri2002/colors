@@ -3,6 +3,12 @@ import Application from "../Application.js";
 export default class Guess extends Application{
 
     /**
+     * @type {Color}
+     */
+    color;
+
+
+    /**
      * @type {HTMLElement}
      */
     containerElem;
@@ -27,8 +33,59 @@ export default class Guess extends Application{
 
     init() {
         super.init();
-        this.initDom();
-        this.initColor();
+        this.initStart();
+        //this.initDom();
+        //this.initColor();
+        
+    }
+
+    initStart(){
+
+        const startContainer = document.createElement('div');
+        this.target.appendChild(startContainer);  
+        startContainer.className = "chooser";
+
+        startContainer.append(document.createElement("h1"));
+        startContainer.lastChild.innerHTML = "Color Guessing Game";
+
+        startContainer.appendChild(document.createElement("div"));
+        startContainer.lastChild.innerHTML = "Match the given color by choosing the correct rgb values! You have three tries every time. Difficulty determines the range of available rgb values.";
+
+        //startContainer.append(document.createElement("img"));
+        //startContainer.lastChild.src = "app/Gradient/src/gradient.PNG";
+
+        const difficulty = ['Easy', 'Medium', 'Hard'];
+        const radio = document.createElement('div');
+        radio.className="gradient-diffinput";
+        startContainer.appendChild(radio);
+
+        for(let diff of difficulty){
+            radio.appendChild(document.createElement('label'));
+            radio.lastChild.className = "radio";
+            radio.lastChild.appendChild(document.createElement('input'));
+            radio.lastChild.lastChild.type = "radio";
+            if(diff == 'Easy') radio.lastChild.lastChild.checked = "checked";
+            radio.lastChild.lastChild.name = "difficulty";
+            radio.lastChild.lastChild.id = diff.toLowerCase();
+            radio.lastChild.appendChild(document.createElement('span'));
+            radio.lastChild.lastChild.className = "checkmark";
+            radio.lastChild.appendChild(document.createElement('label'));
+            radio.lastChild.lastChild.setAttribute('for', diff.toLowerCase(0));
+            radio.lastChild.lastChild.innerHTML = diff;
+        }
+                
+        startContainer.appendChild(document.createElement('button'));
+        startContainer.lastChild.innerHTML = "Start";
+        startContainer.lastChild.addEventListener('click', function(evt){
+            this.target.innerHTML = "";
+            //Still have to give difficulty level to the proper function
+            console.log(this);
+            
+            this.initDom(radio.querySelector(('input[name="difficulty"]:checked')).id);
+            this.initColor();
+        
+        }.bind(this));
+        
         
     }
 
@@ -37,34 +94,49 @@ export default class Guess extends Application{
         let g = Math.floor(Math.random()*256);
         let b = Math.floor(Math.random()*256);
 
-        const color = new Color([r,g,b]);
-        console.log(color.rgb);
-        this.rand.appendChild(color.domElem);
+        //this.color = new Color([r,g,b]);
+        this.color = new Color({Red: r, Green: g, Blue: b});
+        console.log(this.color.rgb);
+        
+
+        return this.color.domElem;
     }
 
-    initDom(){
+    initDom(difficulty){
+        //console.log(difficulty);
+
         this.containerElem = document.createElement('div');
+        this.containerElem.className="guess-container";
         this.rand = document.createElement('div');
         this.containerElem.appendChild(this.rand);
 
         this.guesses = document.createElement('div');
         this.guesses.className = "color-guesses";
         this.rand.appendChild(this.guesses);    
-        
+
+        this.rand.appendChild(this.initColor());
         
         this.input = document.createElement('div');
         this.input.className = "guess-input";
         this.containerElem.appendChild(this.input);
 
+
+        console.log(this.color);
+        //THIS IS WHERE I GOTTA SET THE DIFFICULTY
+        
         for(let elem of ['Red', 'Green', 'Blue']){
+
+            console.log(this.color.rgb);
+            let values = this.chooseRange(this.color.rgb[elem] ,difficulty);
+            console.log(values);
             
             const range = document.createElement('input')
             this.input.appendChild(range);
             range.type = "range";
             range.name = elem.toLowerCase();
-            range.value = "0";
-            range.min = "0";
-            range.max = "255";
+            range.value = values.first;
+            range.min = values.first;
+            range.max = values.second;
             range.className=elem.toLowerCase();
 
             
@@ -82,19 +154,28 @@ export default class Guess extends Application{
         this.input.lastChild.innerHTML = "Submit";
         this.target.appendChild(this.containerElem);
 
-        //ide majd az adatok átadása kell és a játék logikája
-        /*this.input.lastChild.addEventListener('click', function(){
-            const r = this.querySelector("input.red").value;
-            const g = this.querySelector("input.green").value;
-            const b = this.querySelector("input.blue").value;
-            
-            Guess.makeGuess();
-
-        }.bind(this.input)); //this.input*/
-
         this.input.lastChild.addEventListener('click', this.makeGuess.bind(this));
         
         
+    }
+
+    chooseRange(value, difficulty){
+        let range;
+        if(difficulty == "easy") range = 50
+        else if(difficulty == "medium") range = 150;
+        else return {first: 0, second: 255};
+        
+        let firstval = Math.floor(Math.random()*range) + 1;
+        let secondval = range - firstval;
+
+        while((value - firstval) < 0 || (value + secondval) > 255){
+            firstval = Math.floor(Math.random()*range) + 1;
+            secondval = range - firstval;
+        }
+
+        
+
+        return {first: value - firstval, second: value + secondval};
     }
 
     makeGuess(){
@@ -103,12 +184,12 @@ export default class Guess extends Application{
             const g = document.querySelector("input.green").value;
             const b = document.querySelector("input.blue").value;
 
-            console.log(document.querySelector("div.color-guesses"));
             const guess = document.createElement("div");
             guess.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
             guess.style.height =`${100/3}%`;
 
-            document.querySelector("div.color-guesses").appendChild(guess);
+            this.guesses.appendChild(guess);
+
 
             //getScore
             const color = document.querySelector("div.color-guess").style.backgroundColor.split("(")[1].split(")")[0].split(", ");
@@ -149,6 +230,6 @@ class Color{
     initDom() {
         this.domElem = document.createElement('div');
         this.domElem.className = 'color-guess';
-        this.domElem.style.backgroundColor = `rgb(${this.rgb[0]}, ${this.rgb[1]}, ${this.rgb[2]})`;
+        this.domElem.style.backgroundColor = `rgb(${this.rgb.Red}, ${this.rgb.Green}, ${this.rgb.Blue})`;
     }
 }
