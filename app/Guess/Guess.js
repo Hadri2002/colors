@@ -125,6 +125,14 @@ export default class Guess extends Application{
            
             
             this.numOfGuesses++;
+
+            if(this.numOfGuesses == 3){
+                console.log("Vége a játéknak: " + this.score);
+            }
+        }
+
+        else{
+            console.log('Nincs több tipped!');
         }
         
     }
