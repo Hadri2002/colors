@@ -33,8 +33,18 @@ export default class Gradient extends Application{
         this.target.appendChild(startContainer);  
         startContainer.className = "chooser";
 
+        startContainer.append(document.createElement("h1"));
+        startContainer.lastChild.innerHTML = "Gradient Game";
+
+        startContainer.appendChild(document.createElement("div"));
+        startContainer.lastChild.innerHTML = "Create a full gradient by switching the tiles to their respective places! Difficulties determine how many set pieces there are in the grid.";
+
+        startContainer.append(document.createElement("img"));
+        startContainer.lastChild.src = "app/Gradient/src/gradient.PNG";
+
         const difficulty = ['Easy', 'Medium', 'Hard'];
         const radio = document.createElement('div');
+        radio.className="gradient-diffinput";
         startContainer.appendChild(radio);
 
         for(let diff of difficulty){
@@ -53,17 +63,29 @@ export default class Gradient extends Application{
         }
 
         const sizing = document.createElement('div');
+        sizing.className= "gradient-sizeinput";
         startContainer.appendChild(sizing);
- 
-        sizing.appendChild(document.createElement('input'));
-        sizing.lastChild.type = "range";
-        sizing.lastChild.name = "sizing";
-        sizing.lastChild.value = "5";
-        sizing.lastChild.min = "5";
-        sizing.lastChild.max = "12";
         sizing.appendChild(document.createElement('label'));
         sizing.lastChild.setAttribute('for', 'sizing');
         sizing.lastChild.innerHTML = "Size";
+        const range = document.createElement('input');
+        sizing.appendChild(range);
+        range.type = "range";
+        range.name = "sizing";
+        range.value = "5";
+        range.min = "5";
+        range.max = "12";
+
+        sizing.appendChild(document.createElement('label'));
+        sizing.lastChild.setAttribute('for', 'sizing');
+        sizing.lastChild.innerHTML = range.value;
+
+        range.addEventListener('input', function(){
+            range.parentElement.lastChild.innerHTML = range.value;
+        });
+
+        
+        
                 
         startContainer.appendChild(document.createElement('button'));
         startContainer.lastChild.innerHTML = "Start";
@@ -73,7 +95,10 @@ export default class Gradient extends Application{
             this.initDom();
             //give the difficulty to initColors
             this.initColors(radio.querySelector(('input[name="difficulty"]:checked')).id);
+
+        
         }.bind(this));
+        
         
     }
 
@@ -146,7 +171,7 @@ export default class Gradient extends Application{
                         else randomColors.push(color);
                 }
                 else{
-                    if((i == 0 && j == 0) || (i == Gradient.size-1 && j == Gradient.size - 1)){
+                    if((i == 0 && j == 0) || (i == Gradient.size-1 && j == Gradient.size - 1) || (i == Gradient.size-1 && j == 0)){
                         color.fixed = true;
                         fixedColors.push(color);
                         }
@@ -169,6 +194,7 @@ export default class Gradient extends Application{
         for(let i = 0; i < Gradient.colors.length; i++){
             if(fixedColors.includes(Gradient.colors[i])) {
                 this.gridElem.appendChild(Gradient.colors[i].domElem);
+                this.gridElem.lastChild.innerHTML = "·";
                 Gradient.colors[i].actualPlace = i;
             }
             else {
@@ -246,20 +272,12 @@ export default class Gradient extends Application{
             if(i == Gradient.colors.length){
                 console.log("nyertél!");
                 
-                //confirm("Nyertél")
-                
-                document.getElementsByClassName("text").id= "center";
-                document.getElementsByClassName("text").innerHtml = "Nyertél";
-
+                console.log(this.target);
+                this.target.lastChild.appendChild(document.createElement("h2"));
+                this.target.lastChild.lastChild.innerHTML="Nyertél!";
+                this.target.lastChild.lastChild.className = "gradient-win";
 
                 this.locked = true;
-
-/*
-                if (confirm("Nyertél")) {
-                    location.reload()
-                } else {
-                    location.reload()
-                }*/
 
             }
         }
