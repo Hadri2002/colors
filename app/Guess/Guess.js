@@ -22,6 +22,9 @@ export default class Guess extends Application{
      */
     input;
 
+    numOfGuesses = 0;
+    score = 3*256;
+
     init() {
         super.init();
         this.initDom();
@@ -62,6 +65,7 @@ export default class Guess extends Application{
             range.value = "0";
             range.min = "0";
             range.max = "255";
+            range.className=elem.toLowerCase();
 
             
             this.input.appendChild(document.createElement('label'));
@@ -76,17 +80,53 @@ export default class Guess extends Application{
 
         this.input.appendChild(document.createElement('button'));
         this.input.lastChild.innerHTML = "Submit";
+        this.target.appendChild(this.containerElem);
 
         //ide majd az adatok átadása kell és a játék logikája
-        this.input.lastChild.addEventListener('click', function(){
-            //NEM MŰKÖDIK A BIND, ELEGEM VAN
-        }.bind(this));
+        /*this.input.lastChild.addEventListener('click', function(){
+            const r = this.querySelector("input.red").value;
+            const g = this.querySelector("input.green").value;
+            const b = this.querySelector("input.blue").value;
+            
+            Guess.makeGuess();
+
+        }.bind(this.input)); //this.input*/
+
+        this.input.lastChild.addEventListener('click', this.makeGuess.bind(this));
         
-        this.target.appendChild(this.containerElem);
+        
     }
 
     makeGuess(){
+        if(this.numOfGuesses < 3){
+            const r = document.querySelector("input.red").value;
+            const g = document.querySelector("input.green").value;
+            const b = document.querySelector("input.blue").value;
 
+            console.log(document.querySelector("div.color-guesses"));
+            const guess = document.createElement("div");
+            guess.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
+            guess.style.height =`${100/3}%`;
+
+            document.querySelector("div.color-guesses").appendChild(guess);
+
+            //getScore
+            const color = document.querySelector("div.color-guess").style.backgroundColor.split("(")[1].split(")")[0].split(", ");
+            const rscore = Math.abs(color[0] - r);
+            const gscore = Math.abs(color[1] - g);
+            const bscore = Math.abs(color[2] - b);
+            const score = rscore + gscore + bscore;
+
+            if(score < this.score) this.score = score;
+
+            console.log(this.score);
+
+            //ez itt a főeredmény!
+           
+            
+            this.numOfGuesses++;
+        }
+        
     }
 
 }
