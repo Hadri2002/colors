@@ -51,8 +51,8 @@ export default class Guess extends Application{
         startContainer.appendChild(document.createElement("div"));
         startContainer.lastChild.innerHTML = "Match the given color by choosing the correct rgb values! You have three tries every time. Difficulty determines the range of available rgb values.";
 
-        //startContainer.append(document.createElement("img"));
-        //startContainer.lastChild.src = "app/Gradient/src/gradient.PNG";
+        startContainer.append(document.createElement("img"));
+        startContainer.lastChild.src = "app/Guess/src/guess.PNG";
 
         const difficulty = ['Easy', 'Medium', 'Hard'];
         const radio = document.createElement('div');
@@ -78,8 +78,6 @@ export default class Guess extends Application{
         startContainer.lastChild.innerHTML = "Start";
         startContainer.lastChild.addEventListener('click', function(evt){
             this.target.innerHTML = "";
-            //Still have to give difficulty level to the proper function
-            console.log(this);
             
             this.initDom(radio.querySelector(('input[name="difficulty"]:checked')).id);
             this.initColor();
@@ -94,16 +92,12 @@ export default class Guess extends Application{
         let g = Math.floor(Math.random()*256);
         let b = Math.floor(Math.random()*256);
 
-        //this.color = new Color([r,g,b]);
-        this.color = new Color({Red: r, Green: g, Blue: b});
-        console.log(this.color.rgb);
-        
+        this.color = new Color({Red: r, Green: g, Blue: b});        
 
         return this.color.domElem;
     }
 
     initDom(difficulty){
-        //console.log(difficulty);
 
         this.containerElem = document.createElement('div');
         this.containerElem.className="guess-container";
@@ -120,18 +114,23 @@ export default class Guess extends Application{
         this.input.className = "guess-input";
         this.containerElem.appendChild(this.input);
 
-
-        console.log(this.color);
-        //THIS IS WHERE I GOTTA SET THE DIFFICULTY
         
         for(let elem of ['Red', 'Green', 'Blue']){
 
-            console.log(this.color.rgb);
             let values = this.chooseRange(this.color.rgb[elem] ,difficulty);
-            console.log(values);
-            
+            const holder = document.createElement("div");
+            holder.className = "guess-inputholder";
+            this.input.appendChild(holder);
+            //holder.style.display = "flex";
+            //holder.style.flexDirection = "column";
+            //holder.style.alignItems = "center";
+
+            holder.appendChild(document.createElement('label'));
+            holder.lastChild.setAttribute('for', elem.toLowerCase());
+            holder.lastChild.innerHTML = elem;
+
             const range = document.createElement('input')
-            this.input.appendChild(range);
+            holder.appendChild(range);
             range.type = "range";
             range.name = elem.toLowerCase();
             range.value = values.first;
@@ -140,10 +139,10 @@ export default class Guess extends Application{
             range.className=elem.toLowerCase();
 
             
-            this.input.appendChild(document.createElement('label'));
-            this.input.lastChild.setAttribute('for', elem.toLowerCase());
-            this.input.lastChild.className = "label" + elem.toLowerCase();
-            this.input.lastChild.innerHTML = range.value;
+            holder.appendChild(document.createElement('label'));
+            holder.lastChild.setAttribute('for', elem.toLowerCase());
+            holder.lastChild.className = "label" + elem.toLowerCase();
+            holder.lastChild.innerHTML = range.value;
             
             range.addEventListener('input', function(){
                 range.parentElement.querySelector(".label" + elem.toLowerCase()).innerHTML = range.value
@@ -192,10 +191,9 @@ export default class Guess extends Application{
 
 
             //getScore
-            const color = document.querySelector("div.color-guess").style.backgroundColor.split("(")[1].split(")")[0].split(", ");
-            const rscore = Math.abs(color[0] - r);
-            const gscore = Math.abs(color[1] - g);
-            const bscore = Math.abs(color[2] - b);
+            const rscore = Math.abs(this.color.rgb.Red - r);
+            const gscore = Math.abs(this.color.rgb.Green - g);
+            const bscore = Math.abs(this.color.rgb.Blue - b);
             const score = rscore + gscore + bscore;
 
             if(score < this.score) this.score = score;
@@ -209,6 +207,15 @@ export default class Guess extends Application{
 
             if(this.numOfGuesses == 3){
                 console.log("Vége a játéknak: " + this.score);
+                this.input.innerHTML = "";
+                this.input.style.display = "block";
+                this.input.style.textAlign = "center";
+                this.input.appendChild(document.createElement("h2"));
+                this.input.lastChild.innerHTML = `(${this.color.rgb.Red}, ${this.color.rgb.Green}, ${this.color.rgb.Blue})`;
+                this.input.appendChild(document.createElement('p'));
+                this.input.lastChild.innerHTML = "Smallest distance of your guesses from the real rgb values: ";
+                this.input.appendChild(document.createElement('p'));
+                this.input.lastChild.innerHTML = this.score;
             }
         }
 

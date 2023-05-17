@@ -217,9 +217,21 @@ img{
 .guess-input{
   display: flex;
   justify-content: center;
+  align-items: center;
   padding-top: 20px;
 }
 
 .guess-container{
   padding-top: 20px;
+}
+
+.guess-inputholder{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 10px;
+}
+
+.guess-input button{
+  height: 50%;
 }
