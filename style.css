@@ -235,3 +235,80 @@ img{
 .guess-input button{
   height: 50%;
 }
+
+
+/* Paint css */
+
+.paint-container{
+    width: 500px;
+    margin: 30px auto;
+    margin-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.paint-container h1{
+    text-align: center;
+}
+
+.paint-grid{
+    width: 500px;
+    height: 500px;
+    border: 2px solid #BCC9D5;
+    background-color: whitesmoke;
+}
+
+.paint-options-one, .paint-options-two{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+#paint-grid-number{
+    /*font-family: ShantellSans;*/
+    width: 200px;
+    padding: 8px 12px;
+    border: 1px solid #BCC9D5;
+    background-color: whitesmoke;
+}
+
+#paint-grid-number:hover{
+    transform: scale(1.1);
+}
+
+.paint-color-picker{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+#paint-colorpicker{
+    height: 51px;
+    padding: 0;
+    border: none;
+    background-color: #202020;
+}
+
+#paint-colorpicker:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.paint-choice{
+    border: 1px solid #BCC9D5;
+    padding: 12px 20px;
+    background-color: whitesmoke;
+    color: #87919B;
+}
+
+.paint-choice:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.paint-active{
+    background-color: #BCC9D5;
+    color: #87919B;
+}
