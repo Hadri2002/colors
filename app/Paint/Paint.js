@@ -16,10 +16,6 @@ export default class Paint extends Application{
     */
     gridElem = document.querySelector(".paint-grid-elements");
 
-    /**
-     * @type {Number}
-     */
-    currentSize = document.getElementById("paint-grid-number").value;
 
     init() {
         super.init();
@@ -52,8 +48,9 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.lastChild.type = "number";
         paintContainer.lastChild.lastChild.lastChild.placeholder = "Enter grid size...";
         paintContainer.lastChild.lastChild.lastChild.id = "paint-grid-number";
-        this.currentSize = paintContainer.lastChild.lastChild.lastChild.value;
-        const asd = paintContainer.lastChild.lastChild.lastChild;
+        paintContainer.lastChild.lastChild.lastChild.addEventListener("input", function(evt){
+            this.initGrid(evt.target.value);
+        }.bind(this))
         
         paintContainer.lastChild.appendChild(document.createElement("div"));
         paintContainer.lastChild.lastChild.className = "paint-color-picker";
@@ -87,13 +84,7 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.id = "paint-clear";
         paintContainer.lastChild.lastChild.textContent = "Clear table";
 
-        this.target.appendChild(paintContainer);
-        console.log("még mindig: ",this.grid);
-        //asd.oninput = ()=>{console.log(this)};
-        console.log();
-        
-        
-        asd.addEventListener("input", this.initGrid.bind(this, 8));
+        this.target.appendChild(paintContainer);       
     }
 
     initGrid(size){
