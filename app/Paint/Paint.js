@@ -6,6 +6,21 @@ export default class Paint extends Application{
     static DEFAULT_SIZE = 16;
     static DEFAULT_MODE = "normal";
 
+    /**
+    * @type {HTMLElement}
+    */
+    grid = document.querySelector(".paint-grid");
+
+    /**
+    * @type {HTMLElement}
+    */
+    gridElem = document.querySelector(".paint-grid-elements");
+
+    /**
+     * @type {Number}
+     */
+    currentSize = document.getElementById("paint-grid-number").value;
+
     init() {
         super.init();
         this.initDom();
@@ -18,9 +33,13 @@ export default class Paint extends Application{
         paintContainer.appendChild(document.createElement("h1"));
         paintContainer.lastChild.textContent = "Paint Game";
 
+        /*paintContainer.appendChild(document.createElement("div"));
+        paintContainer.lastChild.textContent = "Choose a size of your liking for the grid and use any color you want or even random generated colors for this pixel art mini game.";*/
 
-        paintContainer.appendChild(document.createElement("div"));
-        paintContainer.lastChild.className = "paint-grid";
+
+        this.grid = paintContainer.appendChild(document.createElement("div"));
+        this.grid.className = "paint-grid";
+        this.initGrid(Paint.DEFAULT_SIZE);
 
 
         paintContainer.appendChild(document.createElement("div"));
@@ -33,7 +52,9 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.lastChild.type = "number";
         paintContainer.lastChild.lastChild.lastChild.placeholder = "Enter grid size...";
         paintContainer.lastChild.lastChild.lastChild.id = "paint-grid-number";
-
+        this.currentSize = paintContainer.lastChild.lastChild.lastChild.value;
+        const asd = paintContainer.lastChild.lastChild.lastChild;
+        
         paintContainer.lastChild.appendChild(document.createElement("div"));
         paintContainer.lastChild.lastChild.className = "paint-color-picker";
 
@@ -67,5 +88,33 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.textContent = "Clear table";
 
         this.target.appendChild(paintContainer);
+        console.log("még mindig: ",this.grid);
+        //asd.oninput = ()=>{console.log(this)};
+        console.log();
+        
+        
+        asd.addEventListener("input", this.initGrid.bind(this, 8));
+    }
+
+    initGrid(size){
+        console.log(size);
+        if(size < 2){
+            alert("Grid size can't be smaller than 2!!");
+            return;
+        }
+        
+        if(size > 100){
+            size = 100;
+        }
+        if (size === "" || size === undefined || size === null){
+            size = Paint.DEFAULT_SIZE;
+        }
+
+        console.log(this.grid);
+        this.grid.innerHTML = "";
+        this.gridElem = this.grid.appendChild(document.createElement('div'));
+        this.gridElem.className = "paint-grid-elements";
+        this.gridElem.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+        this.gridElem.style.gridTemplateRows = `repeat(${size}, 1fr)`;
     }
 }
