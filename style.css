@@ -1,5 +1,31 @@
 /* Base */
 
+.home{
+  text-align: center;
+  margin-top: 20px;
+}
+
+.home-cards{
+  margin-top: 45px;
+  display: flex;
+  justify-content: center;
+}
+
+.home-card{
+  background-color: #343434;
+  border-radius: 10%;
+  height: 400px;
+  width: 350px;
+  margin: 15px;
+  padding: 10px;
+}
+
+.home-card:hover{
+  transition: 0.2s;
+  width: 360px;
+  height: 410px;
+}
+
 body {
     background-color: #202020;
     color: rgb(188, 201, 213);
@@ -30,19 +56,19 @@ center {
 
 a{
     color: rgb(44, 178, 178);
-    transition: all 0.5s ease-in;
+    transition: all 0.3s ease-in;
 }
   a:visited {
     color: rgb(44, 178, 178);
-    transition: all 0.5s ease-in;
+    transition: all 0.3s ease-in;
   }
   a:hover {
     color: rgb(71, 255, 246);
-    transition: all 0.5s ease-in;
+    transition: all 0.3s ease-in;
   }
   a:active {
     color: rgb(0, 157, 255);
-    transition: all 0.5s ease-in;
+    transition: all 0.3s ease-in;
   }
 
   .radio {

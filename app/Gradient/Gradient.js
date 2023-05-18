@@ -238,7 +238,7 @@ export default class Gradient extends Application{
             }
             //Place1 is smaller
 
-            const children = document.querySelectorAll('div.color');
+            const children = document.querySelectorAll('div.gradient-color');
             evt.detail.grid.innerHTML = "";
 
             for(let i = 0; i < Gradient.size*Gradient.size; i++){
