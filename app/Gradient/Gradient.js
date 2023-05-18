@@ -24,10 +24,10 @@ export default class Gradient extends Application{
     init() {
         super.init();
         this.initStart();
-        //this.initColors();
     }
 
     initStart(){
+        //Startscreen setup
 
         const startContainer = document.createElement('div');
         this.target.appendChild(startContainer);  
@@ -42,6 +42,7 @@ export default class Gradient extends Application{
         startContainer.append(document.createElement("img"));
         startContainer.lastChild.src = "app/Gradient/src/gradient.PNG";
 
+        //Difficulty chooser
         const difficulty = ['Easy', 'Medium', 'Hard'];
         const radio = document.createElement('div');
         radio.className="gradient-diffinput";
@@ -62,6 +63,7 @@ export default class Gradient extends Application{
             radio.lastChild.lastChild.innerHTML = diff;
         }
 
+        //Size chooser
         const sizing = document.createElement('div');
         sizing.className= "gradient-sizeinput";
         startContainer.appendChild(sizing);
@@ -84,26 +86,21 @@ export default class Gradient extends Application{
             range.parentElement.lastChild.innerHTML = range.value;
         });
 
-        
-        
-                
+        //Start button
         startContainer.appendChild(document.createElement('button'));
         startContainer.lastChild.innerHTML = "Start";
         startContainer.lastChild.addEventListener('click', function(evt){
+
             this.target.innerHTML = "";
             Gradient.size = sizing.querySelector('input').value;
             this.initDom();
-            //give the difficulty to initColors
             this.initColors(radio.querySelector(('input[name="difficulty"]:checked')).id);
 
-        
         }.bind(this));
-        
-        
     }
 
     initDom(){
-
+        //Create base
         const containerElem = document.createElement('div');
         containerElem.className = "gradient-container";
 
@@ -112,7 +109,6 @@ export default class Gradient extends Application{
 
         containerElem.lastChild.appendChild(document.createElement('div'));
         containerElem.lastChild.lastChild.className = "gradient-grid";
-        
         
         this.gridElem = containerElem.lastChild.lastChild;
         this.gridElem.style.gridTemplateColumns = `repeat(${Gradient.size}, 1fr)`;
@@ -131,6 +127,7 @@ export default class Gradient extends Application{
     }
 
     initColors(difficulty){
+        //Creates base grid colors
         let r = this.colorCheck(Math.floor(Math.random()*256));
         let g = this.colorCheck(Math.floor(Math.random()*256));
         let b = this.colorCheck(Math.floor(Math.random()*256));
@@ -176,8 +173,7 @@ export default class Gradient extends Application{
                         fixedColors.push(color);
                         }
                         else randomColors.push(color);
-                }
-                
+                }   
             }
         }
 
@@ -189,7 +185,6 @@ export default class Gradient extends Application{
             const j = Math.floor(Math.random() * (i + 1));
             [randomColors[i], randomColors[j]] = [randomColors[j], randomColors[i]];
         }
-        
         
         for(let i = 0; i < Gradient.colors.length; i++){
             if(fixedColors.includes(Gradient.colors[i])) {
@@ -270,11 +265,10 @@ export default class Gradient extends Application{
             }
 
             if(i == Gradient.colors.length){
-                console.log("nyertél!");
                 
                 console.log(this.target);
                 this.target.lastChild.appendChild(document.createElement("h2"));
-                this.target.lastChild.lastChild.innerHTML="Nyertél!";
+                this.target.lastChild.lastChild.innerHTML="You win!";
                 this.target.lastChild.lastChild.className = "gradient-win";
 
                 this.locked = true;
@@ -290,7 +284,6 @@ export default class Gradient extends Application{
 }
 
 class Color{
-
     //where it currently is after shuffling
     actualPlace;
 
@@ -307,7 +300,7 @@ class Color{
 
     initDom() {
         this.domElem = document.createElement('div');
-        this.domElem.className = 'color';
+        this.domElem.className = 'gradient-color';
         this.domElem.style.backgroundColor = `rgb(${this.rgb[0]}, ${this.rgb[1]}, ${this.rgb[2]})`;
 
         this.domElem.addEventListener('click', this.choose.bind(this));

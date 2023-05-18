@@ -7,7 +7,6 @@ export default class Guess extends Application{
      */
     color;
 
-
     /**
      * @type {HTMLElement}
      */
@@ -34,13 +33,10 @@ export default class Guess extends Application{
     init() {
         super.init();
         this.initStart();
-        //this.initDom();
-        //this.initColor();
-        
     }
 
     initStart(){
-
+        //Base setup
         const startContainer = document.createElement('div');
         this.target.appendChild(startContainer);  
         startContainer.className = "chooser";
@@ -54,6 +50,7 @@ export default class Guess extends Application{
         startContainer.append(document.createElement("img"));
         startContainer.lastChild.src = "app/Guess/src/guess.PNG";
 
+        //Difficulty chooser
         const difficulty = ['Easy', 'Medium', 'Hard'];
         const radio = document.createElement('div');
         radio.className="gradient-diffinput";
@@ -73,7 +70,7 @@ export default class Guess extends Application{
             radio.lastChild.lastChild.setAttribute('for', diff.toLowerCase(0));
             radio.lastChild.lastChild.innerHTML = diff;
         }
-                
+        //Start button
         startContainer.appendChild(document.createElement('button'));
         startContainer.lastChild.innerHTML = "Start";
         startContainer.lastChild.addEventListener('click', function(evt){
@@ -83,11 +80,10 @@ export default class Guess extends Application{
             this.initColor();
         
         }.bind(this));
-        
-        
     }
 
     initColor(){
+        //Creates the color to guess
         let r = Math.floor(Math.random()*256);
         let g = Math.floor(Math.random()*256);
         let b = Math.floor(Math.random()*256);
@@ -105,7 +101,7 @@ export default class Guess extends Application{
         this.containerElem.appendChild(this.rand);
 
         this.guesses = document.createElement('div');
-        this.guesses.className = "color-guesses";
+        this.guesses.className = "guess-guesses";
         this.rand.appendChild(this.guesses);    
 
         this.rand.appendChild(this.initColor());
@@ -121,9 +117,6 @@ export default class Guess extends Application{
             const holder = document.createElement("div");
             holder.className = "guess-inputholder";
             this.input.appendChild(holder);
-            //holder.style.display = "flex";
-            //holder.style.flexDirection = "column";
-            //holder.style.alignItems = "center";
 
             holder.appendChild(document.createElement('label'));
             holder.lastChild.setAttribute('for', elem.toLowerCase());
@@ -172,8 +165,6 @@ export default class Guess extends Application{
             secondval = range - firstval;
         }
 
-        
-
         return {first: value - firstval, second: value + secondval};
     }
 
@@ -186,43 +177,46 @@ export default class Guess extends Application{
             const guess = document.createElement("div");
             guess.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
             guess.style.height =`${100/3}%`;
+            guess.innerHTML = `(${r}, ${g}, ${b})`;
+            guess.className = "guess-guess";
 
+            if((r*0.299 + g*0.587 + b*0.114) > 186){
+                guess.style.color = "black";
+            }
+            else{
+                guess.style.color = "white";
+            }
             this.guesses.appendChild(guess);
 
-
-            //getScore
-            const rscore = Math.abs(this.color.rgb.Red - r);
-            const gscore = Math.abs(this.color.rgb.Green - g);
-            const bscore = Math.abs(this.color.rgb.Blue - b);
-            const score = rscore + gscore + bscore;
-
-            if(score < this.score) this.score = score;
-
-            console.log(this.score);
-
-            //ez itt a főeredmény!
-           
+            this.getScore(r, g, b);         
             
             this.numOfGuesses++;
 
             if(this.numOfGuesses == 3){
-                console.log("Vége a játéknak: " + this.score);
-                this.input.innerHTML = "";
-                this.input.style.display = "block";
-                this.input.style.textAlign = "center";
-                this.input.appendChild(document.createElement("h2"));
-                this.input.lastChild.innerHTML = `(${this.color.rgb.Red}, ${this.color.rgb.Green}, ${this.color.rgb.Blue})`;
-                this.input.appendChild(document.createElement('p'));
-                this.input.lastChild.innerHTML = "Smallest distance of your guesses from the real rgb values: ";
-                this.input.appendChild(document.createElement('p'));
-                this.input.lastChild.innerHTML = this.score;
+                this.win();
             }
         }
+    }
 
-        else{
-            console.log('Nincs több tipped!');
-        }
-        
+    getScore(r, g, b){
+        const rscore = Math.abs(this.color.rgb.Red - r);
+        const gscore = Math.abs(this.color.rgb.Green - g);
+        const bscore = Math.abs(this.color.rgb.Blue - b);
+        const score = rscore + gscore + bscore;
+
+        if(score < this.score) this.score = score;
+    }
+
+    win(){
+        this.input.innerHTML = "";
+        this.input.style.display = "block";
+        this.input.style.textAlign = "center";
+        this.input.appendChild(document.createElement("h2"));
+        this.input.lastChild.innerHTML = `(${this.color.rgb.Red}, ${this.color.rgb.Green}, ${this.color.rgb.Blue})`;
+        this.input.appendChild(document.createElement('p'));
+        this.input.lastChild.innerHTML = "Smallest distance of your guesses from the real rgb values: ";
+        this.input.appendChild(document.createElement('p'));
+        this.input.lastChild.innerHTML = this.score;
     }
 
 }
@@ -236,7 +230,7 @@ class Color{
 
     initDom() {
         this.domElem = document.createElement('div');
-        this.domElem.className = 'color-guess';
+        this.domElem.className = 'guess-color';
         this.domElem.style.backgroundColor = `rgb(${this.rgb.Red}, ${this.rgb.Green}, ${this.rgb.Blue})`;
     }
 }
