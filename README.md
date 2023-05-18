@@ -55,3 +55,42 @@ Handles the logic of the application itself
 * Allows for colors to be switched, and checks if the gradient is completed
 
 ## Guess
+### Premise 
+Match the given color by choosing the correct rgb values! You have three tries every time. Difficulty determines the range of available rgb values.
+
+![image](https://github.com/Hadri2002/colors/assets/93373919/d229c70c-c444-4350-bcb1-3011732a82da)
+
+
+### Color Class
+A class for the color to be guessed.
+
+### Guess Class
+Handles the logic of the application itself
+
+**InitStart method**
+
+* Creates the difficulty choosing screen, then calls the start method with the correct settings
+
+**InitColor method**
+
+* Randomizes the color to be guessed
+
+**InitDom method**
+
+* Creates the HTML base for the game
+
+**ChooseRange method**
+
+* Decides the range of available rgb values, based on the difficulty
+
+**MakeGuess method**
+
+* Handles the guesses of the user, adding them to the page, checking if there have been three guesses already
+
+**GetScore method**
+
+* Helper method of makeGuess, calculates the highest score of the user 
+
+**Win method**
+
+* Method is called once the user has guessed three times, displays their best score and the original color's rgb values
