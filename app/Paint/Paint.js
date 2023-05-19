@@ -26,10 +26,10 @@ export default class Paint extends Application{
     */
     currentMode = Paint.DEFAULT_MODE;
 
-     /**
+    /**
     * @type {String}
     */
-     currentColor = Paint.DEFAULT_COLOR;
+    currentColor = Paint.DEFAULT_COLOR;
 
     
     init() {
@@ -79,6 +79,7 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.lastChild.type = "color";
         paintContainer.lastChild.lastChild.lastChild.id = "paint-colorpicker";
         paintContainer.lastChild.lastChild.lastChild.value = "#BCC9D5";
+        paintContainer.lastChild.lastChild.addEventListener("change", this.changeColor.bind(this));
 
 
         paintContainer.appendChild(document.createElement("div"));
@@ -88,6 +89,7 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.className = "paint-choice";
         paintContainer.lastChild.lastChild.id = "paint-random";
         paintContainer.lastChild.lastChild.textContent = "Random colors";
+        paintContainer.lastChild.lastChild.addEventListener("click", this.changeToRandom.bind(this));
 
         paintContainer.lastChild.appendChild(document.createElement("div"));
         paintContainer.lastChild.lastChild.className = "paint-choice";
@@ -135,12 +137,28 @@ export default class Paint extends Application{
             this.gridElem.lastChild.className = "paint-gridsquare";
             this.gridElem.lastChild.addEventListener("mouseover", this.paintGrid.bind(this))
         }
+        console.log(this.choices);
+    }
+
+    changeColor(event){
+        this.currentColor = event.target.value;
+        this.currentMode = "normal";
+    }
+
+    changeToRandom(event){
+        this.currentMode = "random";
     }
 
     paintGrid(event){
         if(!this.mouseDown) return;
         if(this.currentMode === "normal"){
             event.target.style.backgroundColor = this.currentColor;
+        }
+        else{
+            let red = Math.floor(Math.random() * 256)
+            let green = Math.floor(Math.random() * 256)
+            let blue = Math.floor(Math.random() * 256)
+            event.target.style.backgroundColor = `rgb(${red},${green},${blue})`;
         }
     }
 
