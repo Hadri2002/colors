@@ -2,7 +2,7 @@ import Application from "../Application.js";
 
 export default class Paint extends Application{
     static DEFAULT_COLOR = "#BCC9D5";
-    static CLEAR_COLOR = "#ffffffb3";
+    static CLEAR_COLOR = "#f5f5f5";
     static DEFAULT_SIZE = 16;
     static DEFAULT_MODE = "normal";
 
@@ -17,9 +17,19 @@ export default class Paint extends Application{
     gridElem = document.querySelector(".paint-grid-elements");
 
     /**
-     * @type {boolean}
-     */
+    * @type {boolean}
+    */
     mouseDown = false;
+
+    /**
+    * @type {String}
+    */
+    currentMode = Paint.DEFAULT_MODE;
+
+     /**
+    * @type {String}
+    */
+     currentColor = Paint.DEFAULT_COLOR;
 
     
     init() {
@@ -83,6 +93,7 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.className = "paint-choice";
         paintContainer.lastChild.lastChild.id = "paint-eraser";
         paintContainer.lastChild.lastChild.textContent = "Eraser";
+        paintContainer.lastChild.lastChild.addEventListener("click", this.erase.bind(this));
 
         paintContainer.lastChild.appendChild(document.createElement("div"));
         paintContainer.lastChild.lastChild.className = "paint-choice";
@@ -128,7 +139,14 @@ export default class Paint extends Application{
 
     paintGrid(event){
         if(!this.mouseDown) return;
-        event.target.style.backgroundColor = "black";
+        if(this.currentMode === "normal"){
+            event.target.style.backgroundColor = this.currentColor;
+        }
+    }
+
+    erase(event){
+        this.currentColor = Paint.CLEAR_COLOR;
+        this.currentMode = "normal";
     }
 
     clearGrid(){
