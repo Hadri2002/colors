@@ -16,6 +16,11 @@ export default class Paint extends Application{
     */
     gridElem = document.querySelector(".paint-grid-elements");
 
+    /**
+     * @type {boolean}
+     */
+    mouseDown = false;
+    
 
     init() {
         super.init();
@@ -88,6 +93,12 @@ export default class Paint extends Application{
     }
 
     initGrid(size){
+        window.addEventListener("mousedown", ()=>{
+            this.mouseDown = true;
+        })
+        window.addEventListener("mouseup", ()=>{
+            this.mouseDown = false;
+        })
         console.log(size);
         if(size < 2){
             alert("Grid size can't be smaller than 2!!");
@@ -107,5 +118,15 @@ export default class Paint extends Application{
         this.gridElem.className = "paint-grid-elements";
         this.gridElem.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
         this.gridElem.style.gridTemplateRows = `repeat(${size}, 1fr)`;
+        for(let i = 0; i < size * size; i++){
+            this.gridElem.appendChild(document.createElement("div"));
+            this.gridElem.lastChild.className = "paint-gridsquare";
+            this.gridElem.lastChild.addEventListener("mouseover", this.paintGrid.bind(this))
+        }
+    }
+
+    paintGrid(event){
+        if(!this.mouseDown) return;
+        event.target.style.backgroundColor = "black";
     }
 }
