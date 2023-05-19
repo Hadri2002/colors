@@ -31,6 +31,11 @@ export default class Paint extends Application{
     */
     currentColor = Paint.DEFAULT_COLOR;
 
+    /**
+     * @type {Array}
+     */
+    choices = document.querySelectorAll(".paint-choice");
+
     
     init() {
         super.init();
@@ -74,6 +79,7 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.lastChild.className = "paint-choice";
         paintContainer.lastChild.lastChild.lastChild.id = "paint-color-choice";
         paintContainer.lastChild.lastChild.lastChild.textContent = "Color";
+        paintContainer.lastChild.lastChild.lastChild.addEventListener("click", this.changeToColor.bind(this));
 
         paintContainer.lastChild.lastChild.appendChild(document.createElement("input"));
         paintContainer.lastChild.lastChild.lastChild.type = "color";
@@ -103,7 +109,9 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.textContent = "Clear board";
         paintContainer.lastChild.lastChild.addEventListener("click", this.clearGrid.bind(this));
 
-        this.target.appendChild(paintContainer);       
+        this.target.appendChild(paintContainer);
+        this.choices = document.querySelectorAll(".paint-choice");
+        console.log("choices: ",this.choices);       
     }
 
     initGrid(size){
@@ -137,16 +145,25 @@ export default class Paint extends Application{
             this.gridElem.lastChild.className = "paint-gridsquare";
             this.gridElem.lastChild.addEventListener("mouseover", this.paintGrid.bind(this))
         }
-        console.log(this.choices);
     }
 
     changeColor(event){
         this.currentColor = event.target.value;
         this.currentMode = "normal";
+        this.choices[0].classList.add("paint-active");
+        this.choices[1].classList.remove("paint-active");
+        this.choices[2].classList.remove("paint-active");
+    }
+
+    changeToColor(event){
+        this.currentColor = document.getElementById("paint-colorpicker").value;
+        this.currentMode = "normal";
+        this.changeMode(event);
     }
 
     changeToRandom(event){
         this.currentMode = "random";
+        this.changeMode(event);
     }
 
     paintGrid(event){
@@ -165,6 +182,7 @@ export default class Paint extends Application{
     erase(event){
         this.currentColor = Paint.CLEAR_COLOR;
         this.currentMode = "normal";
+        this.changeMode(event);
     }
 
     clearGrid(){
@@ -173,4 +191,11 @@ export default class Paint extends Application{
             item.style.backgroundColor = Paint.CLEAR_COLOR;
         });
     }
+
+    changeMode = function(event){
+        this.choices.forEach(function(item){
+            item.classList.remove("paint-active");
+        });
+        event.target.classList.add("paint-active");
+    }.bind(this);
 }
