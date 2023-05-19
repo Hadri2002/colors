@@ -20,8 +20,8 @@ export default class Paint extends Application{
      * @type {boolean}
      */
     mouseDown = false;
-    
 
+    
     init() {
         super.init();
         this.initDom();
@@ -87,7 +87,8 @@ export default class Paint extends Application{
         paintContainer.lastChild.appendChild(document.createElement("div"));
         paintContainer.lastChild.lastChild.className = "paint-choice";
         paintContainer.lastChild.lastChild.id = "paint-clear";
-        paintContainer.lastChild.lastChild.textContent = "Clear table";
+        paintContainer.lastChild.lastChild.textContent = "Clear board";
+        paintContainer.lastChild.lastChild.addEventListener("click", this.clearGrid.bind(this));
 
         this.target.appendChild(paintContainer);       
     }
@@ -128,5 +129,12 @@ export default class Paint extends Application{
     paintGrid(event){
         if(!this.mouseDown) return;
         event.target.style.backgroundColor = "black";
+    }
+
+    clearGrid(){
+        let grids = [...this.gridElem.children]
+        grids.forEach(function(item){
+            item.style.backgroundColor = Paint.CLEAR_COLOR;
+        });
     }
 }
