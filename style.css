@@ -240,16 +240,17 @@ img{
 /* Paint css */
 
 .paint-container{
-    width: 500px;
-    margin: 30px auto;
+    padding: 30px;
     margin-bottom: 100px;
     display: flex;
     flex-direction: column;
-    gap: 40px;
+    align-items: center;
+    gap: 30px;
 }
 
 .paint-container h1{
     text-align: center;
+    padding: 0;
 }
 
 .paint-grid{
@@ -272,6 +273,7 @@ img{
 }
 
 .paint-options-one, .paint-options-two{
+    width: 500px;
     display: flex;
     align-items: center;
     justify-content: space-around;

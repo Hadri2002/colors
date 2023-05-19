@@ -43,14 +43,15 @@ export default class Paint extends Application{
     }
 
     initDom(){
-        let paintContainer = document.createElement("div");
+
+        const paintContainer = document.createElement("div");
         paintContainer.className = "paint-container";
 
         paintContainer.appendChild(document.createElement("h1"));
         paintContainer.lastChild.textContent = "Paint Game";
 
-        /*paintContainer.appendChild(document.createElement("div"));
-        paintContainer.lastChild.textContent = "Choose a size of your liking for the grid and use any color you want or even random generated colors for this pixel art mini game.";*/
+        paintContainer.appendChild(document.createElement("div"));
+        paintContainer.lastChild.textContent = "Choose a size of your liking for the grid and use any color you want or even random generated colors for this pixel art mini game.";
 
 
         this.grid = paintContainer.appendChild(document.createElement("div"));
@@ -76,7 +77,7 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.className = "paint-color-picker";
 
         paintContainer.lastChild.lastChild.appendChild(document.createElement("div"));
-        paintContainer.lastChild.lastChild.lastChild.className = "paint-choice";
+        paintContainer.lastChild.lastChild.lastChild.className = "paint-choice paint-active";
         paintContainer.lastChild.lastChild.lastChild.id = "paint-color-choice";
         paintContainer.lastChild.lastChild.lastChild.textContent = "Color";
         paintContainer.lastChild.lastChild.lastChild.addEventListener("click", this.changeToColor.bind(this));
