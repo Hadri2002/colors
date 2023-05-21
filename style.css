@@ -394,3 +394,15 @@ a{
     background-color: #87919B;
     color: whitesmoke;
 }
+
+.alert{
+    position: absolute;
+    top: 2%;
+    left: 20%;
+    z-index: 1;
+    width: 60%;
+    text-align: center;
+    padding: 15px;
+    background-color: #c2564e;
+    color: whitesmoke;
+}

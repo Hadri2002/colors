@@ -124,7 +124,12 @@ export default class Paint extends Application{
         })
         console.log(size);
         if(size < 2){
-            alert("Grid size can't be smaller than 2!!");
+            let alert = this.target.appendChild(document.createElement("div"));
+            alert.className = "alert";
+            alert.textContent = "Grid size can't be smaller than 2!!";
+            setTimeout(function () {
+                alert.remove();
+            }, 4000);
             return;
         }
         
