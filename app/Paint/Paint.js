@@ -69,6 +69,8 @@ export default class Paint extends Application{
         paintContainer.lastChild.lastChild.lastChild.type = "number";
         paintContainer.lastChild.lastChild.lastChild.placeholder = "Enter grid size...";
         paintContainer.lastChild.lastChild.lastChild.id = "paint-grid-number";
+        paintContainer.lastChild.lastChild.lastChild.max = 100;
+        paintContainer.lastChild.lastChild.lastChild.min = 2;
         paintContainer.lastChild.lastChild.lastChild.addEventListener("input", function(evt){
             this.initGrid(evt.target.value);
         }.bind(this))
@@ -116,30 +118,20 @@ export default class Paint extends Application{
     }
 
     initGrid(size){
-        window.addEventListener("mousedown", ()=>{
-            this.mouseDown = true;
-        })
-        window.addEventListener("mouseup", ()=>{
-            this.mouseDown = false;
-        })
-        console.log(size);
+        console.log("megadott size: ",size);
         if(size < 2){
-            let alert = this.target.appendChild(document.createElement("div"));
-            alert.className = "alert";
-            alert.textContent = "Grid size can't be smaller than 2!!";
-            setTimeout(function () {
-                alert.remove();
-            }, 4000);
-            return;
+            this.sendAlert(2);
+            size = 2;
         }
         
         if(size > 100){
+            this.sendAlert(100);
             size = 100;
         }
         if (size === "" || size === undefined || size === null){
             size = Paint.DEFAULT_SIZE;
         }
-
+        console.log("limitelt size: ", size);
         console.log(this.grid);
         this.grid.innerHTML = "";
         this.gridElem = this.grid.appendChild(document.createElement('div'));
@@ -149,8 +141,16 @@ export default class Paint extends Application{
         for(let i = 0; i < size * size; i++){
             this.gridElem.appendChild(document.createElement("div"));
             this.gridElem.lastChild.className = "paint-gridsquare";
-            this.gridElem.lastChild.addEventListener("mouseover", this.paintGrid.bind(this))
+            this.gridElem.lastChild.addEventListener("mouseover", this.paintGrid.bind(this));
         }
+        this.grid.addEventListener("mousedown", (event)=>{
+            event.preventDefault();
+            this.mouseDown = true;
+        })
+        this.grid.addEventListener("mouseup", (event)=>{
+            event.preventDefault();
+            this.mouseDown = false;
+        })
     }
 
     changeColor(event){
@@ -203,5 +203,19 @@ export default class Paint extends Application{
             item.classList.remove("paint-active");
         });
         event.target.classList.add("paint-active");
+    }.bind(this);
+
+    sendAlert = function(limit){
+        let alert = this.target.appendChild(document.createElement("div"));
+        alert.className = "alert";
+        if(limit === 2){
+            alert.textContent = "Grid size can't be smaller than 2!!";
+        }
+        else{
+            alert.textContent = "Grid size can't be greater than 100!!";
+        }
+        setTimeout(function () {
+            alert.remove();
+        }, 4000);
     }.bind(this);
 }
