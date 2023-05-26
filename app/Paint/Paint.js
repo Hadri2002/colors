@@ -152,13 +152,19 @@ export default class Paint extends Application{
         for(let i = 0; i < size * size; i++){
             this.gridElem.appendChild(document.createElement("div"));
             this.gridElem.lastChild.className = "paint-gridsquare";
+            this.gridElem.lastChild.addEventListener("click", (event) => {
+                this.mouseDown = true;
+                const paintGridClick = this.paintGrid.bind(this)
+                paintGridClick(event);
+                this.mouseDown = false;
+            });
             this.gridElem.lastChild.addEventListener("mouseover", this.paintGrid.bind(this));
         }
-        this.grid.addEventListener("mousedown", (event)=>{
+        this.grid.addEventListener("mousedown", (event) => {
             event.preventDefault();
             this.mouseDown = true;
         })
-        this.grid.addEventListener("mouseup", (event)=>{
+        this.grid.addEventListener("mouseup", (event) => {
             event.preventDefault();
             this.mouseDown = false;
         })
