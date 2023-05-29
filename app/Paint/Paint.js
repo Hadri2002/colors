@@ -5,6 +5,7 @@ export default class Paint extends Application{
     static CLEAR_COLOR = "#f5f5f5";
     static DEFAULT_SIZE = 16;
     static DEFAULT_MODE = "normal";
+    static choices = []
 
     /**
     * @type {HTMLElement}
@@ -31,10 +32,7 @@ export default class Paint extends Application{
     */
     currentColor = Paint.DEFAULT_COLOR;
 
-    /**
-     * @type {Array}
-     */
-    choices = document.querySelectorAll(".paint-choice");
+
 
     
     init() {
@@ -45,6 +43,7 @@ export default class Paint extends Application{
     initDom(){
 
         const paintContainer = document.createElement("div");
+        this.target.appendChild(paintContainer);
         paintContainer.className = "paint-container";
 
         paintContainer.appendChild(document.createElement("h1"));
@@ -59,82 +58,91 @@ export default class Paint extends Application{
         this.initGrid(Paint.DEFAULT_SIZE);
 
 
-        paintContainer.appendChild(document.createElement("div"));
-        paintContainer.lastChild.className = "paint-options-one";
+        const paintOptionsOne = document.createElement("div");
+        paintContainer.appendChild(paintOptionsOne);
+        paintOptionsOne.className = "paint-options-one";
 
-        paintContainer.lastChild.appendChild(document.createElement("div"));
-        paintContainer.lastChild.lastChild.className = "paint-size";
+        const paintSize = document.createElement("div");
+        paintOptionsOne.appendChild(paintSize);
+        paintSize.className = "paint-size";
 
-        paintContainer.lastChild.lastChild.appendChild(document.createElement("input"));
-        paintContainer.lastChild.lastChild.lastChild.type = "number";
-        paintContainer.lastChild.lastChild.lastChild.placeholder = "Enter grid size...";
-        paintContainer.lastChild.lastChild.lastChild.id = "paint-grid-number";
-        paintContainer.lastChild.lastChild.lastChild.addEventListener("input", function(evt){
+        const paintGridNumber = document.createElement("input");
+        paintSize.appendChild(paintGridNumber);
+        paintGridNumber.type = "number";
+        paintGridNumber.placeholder = "Enter grid size...";
+        paintGridNumber.id = "paint-grid-number";
+        paintGridNumber.max = 100;
+        paintGridNumber.min = 2;
+        paintGridNumber.addEventListener("input", function(evt){
             this.initGrid(evt.target.value);
         }.bind(this))
         
-        paintContainer.lastChild.appendChild(document.createElement("div"));
-        paintContainer.lastChild.lastChild.className = "paint-color-picker";
+        const paintColorPicker = document.createElement("div");
+        paintOptionsOne.appendChild(paintColorPicker);
+        paintColorPicker.className = "paint-color-picker";
 
-        paintContainer.lastChild.lastChild.appendChild(document.createElement("div"));
-        paintContainer.lastChild.lastChild.lastChild.className = "paint-choice paint-active";
-        paintContainer.lastChild.lastChild.lastChild.id = "paint-color-choice";
-        paintContainer.lastChild.lastChild.lastChild.textContent = "Color";
-        paintContainer.lastChild.lastChild.lastChild.addEventListener("click", this.changeToColor.bind(this));
+        const paintColorChoice = document.createElement("div");
+        paintColorPicker.appendChild(paintColorChoice);
+        paintColorChoice.className = "paint-choice paint-active";
+        paintColorChoice.id = "paint-color-choice";
+        paintColorChoice.textContent = "Color";
+        paintColorChoice.addEventListener("click", this.changeToColor.bind(this));
+        Paint.choices.push(paintColorChoice);
 
-        paintContainer.lastChild.lastChild.appendChild(document.createElement("input"));
-        paintContainer.lastChild.lastChild.lastChild.type = "color";
-        paintContainer.lastChild.lastChild.lastChild.id = "paint-colorpicker";
-        paintContainer.lastChild.lastChild.lastChild.value = "#BCC9D5";
-        paintContainer.lastChild.lastChild.addEventListener("change", this.changeColor.bind(this));
+        const paintColorpicker = document.createElement("input");
+        paintColorPicker.appendChild(paintColorpicker);
+        paintColorpicker.type = "color";
+        paintColorpicker.id = "paint-colorpicker";
+        paintColorpicker.value = "#BCC9D5";
+        paintColorPicker.addEventListener("change", this.changeColor.bind(this));
 
+        
+        const paintOptionsTwo = document.createElement("div");
+        paintContainer.appendChild(paintOptionsTwo);
+        paintOptionsTwo.className = "paint-options-two";
 
-        paintContainer.appendChild(document.createElement("div"));
-        paintContainer.lastChild.className = "paint-options-two";
+        const paintRandom = document.createElement("div");
+        paintOptionsTwo.appendChild(paintRandom);
+        paintRandom.className = "paint-choice";
+        paintRandom.id = "paint-random";
+        paintRandom.textContent = "Random colors";
+        paintRandom.addEventListener("click", this.changeToRandom.bind(this));
+        Paint.choices.push(paintRandom);
 
-        paintContainer.lastChild.appendChild(document.createElement("div"));
-        paintContainer.lastChild.lastChild.className = "paint-choice";
-        paintContainer.lastChild.lastChild.id = "paint-random";
-        paintContainer.lastChild.lastChild.textContent = "Random colors";
-        paintContainer.lastChild.lastChild.addEventListener("click", this.changeToRandom.bind(this));
+        const paintEraser = document.createElement("div");
+        paintOptionsTwo.appendChild(paintEraser);
+        paintEraser.className = "paint-choice";
+        paintEraser.id = "paint-eraser";
+        paintEraser.textContent = "Eraser";
+        paintEraser.addEventListener("click", this.erase.bind(this));
+        Paint.choices.push(paintEraser);
 
-        paintContainer.lastChild.appendChild(document.createElement("div"));
-        paintContainer.lastChild.lastChild.className = "paint-choice";
-        paintContainer.lastChild.lastChild.id = "paint-eraser";
-        paintContainer.lastChild.lastChild.textContent = "Eraser";
-        paintContainer.lastChild.lastChild.addEventListener("click", this.erase.bind(this));
+        const paintClear = document.createElement("div");
+        paintOptionsTwo.appendChild(paintClear);
+        paintClear.className = "paint-choice";
+        paintClear.id = "paint-clear";
+        paintClear.textContent = "Clear board";
+        paintClear.addEventListener("click", this.clearGrid.bind(this));
+        Paint.choices.push(paintClear);
 
-        paintContainer.lastChild.appendChild(document.createElement("div"));
-        paintContainer.lastChild.lastChild.className = "paint-choice";
-        paintContainer.lastChild.lastChild.id = "paint-clear";
-        paintContainer.lastChild.lastChild.textContent = "Clear board";
-        paintContainer.lastChild.lastChild.addEventListener("click", this.clearGrid.bind(this));
-
-        this.target.appendChild(paintContainer);
-        this.choices = document.querySelectorAll(".paint-choice");
-        console.log("choices: ",this.choices);       
+        //console.log("choices: ",this.choices);       
     }
 
     initGrid(size){
-        window.addEventListener("mousedown", ()=>{
-            this.mouseDown = true;
-        })
-        window.addEventListener("mouseup", ()=>{
-            this.mouseDown = false;
-        })
-        console.log(size);
+        console.log("megadott size: ",size);
         if(size < 2){
-            alert("Grid size can't be smaller than 2!!");
-            return;
+            this.sendAlert(2);
+            size = 2;
         }
         
         if(size > 100){
+            this.sendAlert(100);
             size = 100;
         }
         if (size === "" || size === undefined || size === null){
             size = Paint.DEFAULT_SIZE;
         }
-
+        console.log("limitelt size: ", size);
         console.log(this.grid);
         this.grid.innerHTML = "";
         this.gridElem = this.grid.appendChild(document.createElement('div'));
@@ -144,16 +152,30 @@ export default class Paint extends Application{
         for(let i = 0; i < size * size; i++){
             this.gridElem.appendChild(document.createElement("div"));
             this.gridElem.lastChild.className = "paint-gridsquare";
-            this.gridElem.lastChild.addEventListener("mouseover", this.paintGrid.bind(this))
+            this.gridElem.lastChild.addEventListener("click", (event) => {
+                this.mouseDown = true;
+                const paintGridClick = this.paintGrid.bind(this)
+                paintGridClick(event);
+                this.mouseDown = false;
+            });
+            this.gridElem.lastChild.addEventListener("mouseover", this.paintGrid.bind(this));
         }
+        this.grid.addEventListener("mousedown", (event) => {
+            event.preventDefault();
+            this.mouseDown = true;
+        })
+        this.grid.addEventListener("mouseup", (event) => {
+            event.preventDefault();
+            this.mouseDown = false;
+        })
     }
 
     changeColor(event){
         this.currentColor = event.target.value;
         this.currentMode = "normal";
-        this.choices[0].classList.add("paint-active");
-        this.choices[1].classList.remove("paint-active");
-        this.choices[2].classList.remove("paint-active");
+        Paint.choices[0].classList.add("paint-active");
+        Paint.choices[1].classList.remove("paint-active");
+        Paint.choices[2].classList.remove("paint-active");
     }
 
     changeToColor(event){
@@ -194,9 +216,23 @@ export default class Paint extends Application{
     }
 
     changeMode = function(event){
-        this.choices.forEach(function(item){
+        Paint.choices.forEach(function(item){
             item.classList.remove("paint-active");
         });
         event.target.classList.add("paint-active");
+    }.bind(this);
+
+    sendAlert = function(limit){
+        let alert = this.target.appendChild(document.createElement("div"));
+        alert.className = "alert";
+        if(limit === 2){
+            alert.textContent = "Grid size can't be smaller than 2!!";
+        }
+        else{
+            alert.textContent = "Grid size can't be greater than 100!!";
+        }
+        setTimeout(function () {
+            alert.remove();
+        }, 4000);
     }.bind(this);
 }

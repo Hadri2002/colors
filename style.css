@@ -15,9 +15,9 @@
   background-color: #343434;
   border-radius: 10%;
   height: 400px;
-  width: 350px;
-  margin: 20px;
-  padding: 10px;
+  width: 300px;
+  margin: 10px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -93,8 +93,7 @@ center {
 }
 
 a{
-    color: rgb(44, 178, 178);
-    transition: all 0.3s ease-in;
+  /*box-shadow:1px 1px 5px 2px #68ffff15;*/
 }
   a:visited {
     color: rgb(44, 178, 178);
@@ -392,5 +391,17 @@ a{
 
 .paint-active{
     background-color: #87919B;
+    color: whitesmoke;
+}
+
+.alert{
+    position: absolute;
+    top: 2%;
+    left: 20%;
+    z-index: 1;
+    width: 60%;
+    text-align: center;
+    padding: 15px;
+    background-color: #c2564e;
     color: whitesmoke;
 }
