@@ -38,6 +38,14 @@ img{
   margin-top: 0 ;
   font-size: 30px;
 }
+.colorToGuess{
+  height: 100px;
+  width: 200px;
+  margin: auto;
+  margin-top: 40px;
+  border-radius: 5px;
+}
+
 
     .button {
       
