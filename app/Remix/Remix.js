@@ -20,7 +20,7 @@ export default class Remix extends Application{
     /**
      * @type {Number}
      */
-    score
+    static score = 0;
 
     init(){
         super.init();
@@ -99,7 +99,7 @@ export default class Remix extends Application{
     guessing(evt){
         //console.log(this);
         //console.log(evt.target.style.backgroundColor);
-        //console.log(this.score);
+        console.log(this.score);
         console.log(this.color);
         console.log(evt);
             //if(evt.target.style.backgroundColor == `rgb(${this.color.color[0]}, ${this.color.color[1]}, ${this.color.color[2]})`){
