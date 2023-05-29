@@ -49,15 +49,28 @@ export default class Remix extends Application{
         this.containerElem.lastChild.appendChild(document.createElement('div'));
         this.containerElem.lastChild.lastChild.className="remix-color-1";
         this.containerElem.lastChild.lastChild.style.backgroundColor = `rgb(${this.colors[0].color[0]},${this.colors[0].color[1]},${this.colors[0].color[2]})`;
-        this.containerElem.lastChild.lastChild.addEventListener('click', this.guessing.bind(this));
+        //this.containerElem.lastChild.lastChild.addEventListener('click', this.guessing.bind(this));
+        const temp = this.color;
+        this.containerElem.lastChild.lastChild.addEventListener('click', function(evt){
+            this.color = temp;
+            this.guessing(evt);
+        }.bind(this));
         this.containerElem.lastChild.appendChild(document.createElement('div'));
         this.containerElem.lastChild.lastChild.className="remix-color-2";
         this.containerElem.lastChild.lastChild.style.backgroundColor = `rgb(${this.colors[1].color[0]},${this.colors[1].color[1]},${this.colors[1].color[2]})`;
-        this.containerElem.lastChild.lastChild.addEventListener('click', this.guessing.bind(this));
+        //this.containerElem.lastChild.lastChild.addEventListener('click', this.guessing.bind(this));
+        this.containerElem.lastChild.lastChild.addEventListener('click', function(evt){
+            this.color = temp;
+            this.guessing(evt);
+        }.bind(this));
         this.containerElem.lastChild.appendChild(document.createElement('div'));
         this.containerElem.lastChild.lastChild.className="remix-color-3";
         this.containerElem.lastChild.lastChild.style.backgroundColor = `rgb(${this.colors[2].color[0]},${this.colors[2].color[1]},${this.colors[2].color[2]})`;
-        this.containerElem.lastChild.lastChild.addEventListener('click', this.guessing.bind(this));
+        //this.containerElem.lastChild.lastChild.addEventListener('click', this.guessing.bind(this));
+        this.containerElem.lastChild.lastChild.addEventListener('click', function(evt){
+            this.color = temp;
+            this.guessing(evt);
+        }.bind(this));
 
         this.containerElem.appendChild(document.createElement('div'));
         this.containerElem.lastChild.className="remix-lyrics";
@@ -84,12 +97,14 @@ export default class Remix extends Application{
     }
 
     guessing(evt){
-        console.log(this);
-        console.log(evt.target.style.backgroundColor);
-        console.log(this.score);
-            if(evt.target.style.backgroundColor == `rgb(${this.color.color[0]}, ${this.color.color[1]}, ${this.color.color[2]})`){
-            this.score += 1;
-        }
+        //console.log(this);
+        //console.log(evt.target.style.backgroundColor);
+        //console.log(this.score);
+        console.log(this.color);
+        console.log(evt);
+            //if(evt.target.style.backgroundColor == `rgb(${this.color.color[0]}, ${this.color.color[1]}, ${this.color.color[2]})`){
+            //this.score += 1;
+        //}
     }
 }
 
