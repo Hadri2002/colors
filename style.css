@@ -93,8 +93,7 @@ center {
 }
 
 a{
-    color: rgb(44, 178, 178);
-    transition: all 0.3s ease-in;
+  box-shadow:1px 1px 5px 2px #68ffff15;
 }
   a:visited {
     color: rgb(44, 178, 178);

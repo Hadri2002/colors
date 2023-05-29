@@ -48,36 +48,35 @@ img{
 
 
     .button {
-      
+      background-color: #202020;
+      box-shadow:1px 1px 5px 2px #68ffff15;
       justify-content: right;
-      margin-right: 150px;
-      background-color: #c2fbd7;
-      border-radius: 100px;
-      box-shadow: rgba(44, 139, 187, 0.2) 0 -25px 18px -14px inset,rgba(44, 134, 187, 0.15) 0 1px 2px,rgba(44, 158, 187, 0.15) 0 2px 4px,rgba(44, 134, 187, 0.15) 0 4px 8px,rgba(44, 163, 187, 0.15) 0 8px 16px,rgba(44, 173, 187, 0.15) 0 16px 32px;
-      color: rgb(1, 62, 62);
+      float: right;
+      margin-right: 200px;
+      border-radius: 50px;
       cursor: pointer;
       display: inline-block;
-      font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
-      padding: 7px 20px;
+       padding: 7px 20px;
       text-align: right;
       /*justify-content: center;*/
       text-decoration: none;
-      transition: all 250ms;
       border: 0;
       font-size: 16px;
       user-select: none;
       -webkit-user-select: none;
       touch-action: manipulation;
-      float: right;
+      color: rgb(44, 178, 178);
+      transition: all 0.3s ease-in;
     }
     
     .button:hover {
-      box-shadow: rgba(44, 182, 187, 0.35) 0 -25px 18px -14px inset,rgba(44, 146, 187, 0.25) 0 1px 2px,rgba(44, 123, 187, 0.25) 0 2px 4px,rgba(44, 156, 187, 0.25) 0 4px 8px,rgba(44, 165, 187, 0.25) 0 8px 16px,rgba(44, 132, 187, 0.25) 0 16px 32px;
-      transform: scale(1.05) rotate(-1deg);
+      color: rgb(71, 255, 246);
+      transition: all 0.3s ease-in;
     }
 		button:active
 		{
-			background: rgb(1, 116, 133);
+			color: rgb(0, 157, 255);
+      transition: all 0.3s ease-in;
 		}
 
 #word {
@@ -92,7 +91,7 @@ img{
 #guesses {
   text-align: center;
   font-size: 24px;
-  margin-top: 20px;
+  margin-top: 0px;
   margin-left: 0%;
 }
 

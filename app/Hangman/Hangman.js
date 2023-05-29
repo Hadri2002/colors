@@ -58,8 +58,6 @@ export default class Hangman extends Application{
     initDom(){
  
         this.target.appendChild(document.createElement('div'));
-        this.target.lastChild.appendChild(document.createElement("h3"));
-        this.target.lastChild.lastChild.innerHTML = "Guess the name of the following color";
         this.target.lastChild.appendChild(document.createElement("div"));
         this.target.lastChild.lastChild.className = "colorToGuess";
         this.target.lastChild.lastChild.style.backgroundColor = `rgb(${this.red},${this.green},${this.blue})`;
