@@ -405,3 +405,16 @@ a{
     background-color: #c2564e;
     color: whitesmoke;
 }
+
+/* Guess Remix*/
+
+.remix-guess-colors
+{
+  height: 300px;
+  display: flex;
+  justify-content: space-between;
+}
+.remix-color-1, .remix-color-2, .remix-color-3
+{
+  width: 33%;
+}
