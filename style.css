@@ -93,7 +93,7 @@ center {
 }
 
 a{
-  box-shadow:1px 1px 5px 2px #68ffff15;
+  /*box-shadow:1px 1px 5px 2px #68ffff15;*/
 }
   a:visited {
     color: rgb(44, 178, 178);
