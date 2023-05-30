@@ -94,3 +94,68 @@ Handles the logic of the application itself
 **Win method**
 
 * Method is called once the user has guessed three times, displays their best score and the original color's rgb values
+
+## Paint
+### Premise
+Simple pixel art, draw anything by switching between a custom color of your choice and randomly generated colors! You can also erase your mistakes or adjust the number of pixels on the board.
+
+kephelye
+
+
+### Paint Class
+A class for the base the application. During initialization the container of the drawing board and the options are all constructed and stored inside the class fields.
+
+**Fields**
+* DEFAULT_COLOR - default color of the pencil
+* CLEAR_COLOR - default clearing color of the application
+* DEFAULT_SIZE - the default number of pixels on the board is 16*16
+* DEFAULT_MODE - the default mode is normal coloring mode
+* choices - this array contains the HTMLElement of each coloring option
+
+* grid - the HTMLElement of the grid container
+* gridElem - the current instance of the GridElem class
+* currentMode - the current coloring mode, it's value is DEFAULT_MODE by default
+* currentColor - the current color of the pencil, it's value is DEFAULT_COLOR by default
+
+
+**InitDom method**
+* Creates the backbone of the application by initializing the DOM and adds eventListeners to each option field. A default instance of the GridElem class (the drawing board itself) is called.
+
+**addListenersToGrid**
+* The required eventListeners for painting are added and handled inside this function, so the user can color by dragging and clicking as well.
+
+**changeColor**
+* If the user changes color on the palette, the currentMode is automatically set to default coloring mode and the currentColor is set to the chosen value.
+
+**changeToColor**
+* This function handles clicking on "Color" button by changing currentMode to normal and currentColor to the value the palette currently holds.
+
+**changeToRandom**
+* This function handles clicking on "Random colors" button by changing currentMode to random.
+
+**changeToErase**
+* This function handles clicking on "Eraser" button by changing currentMode to normal and currentColor to the default clearing color of the class.
+
+**changeMode**
+* Once one of the previously mentioned options are clicked this method is called to handle the css changes on these buttons.
+
+### GridElem Class
+A class for the grid/drawing board itself, the painting/clearing logic is handled here as well.
+
+**Fields**
+* size - contains the current size of the drawing board (number pixels = size*size)
+* grid - the HTMLElement of the grid container
+* domElem - the HTMLElement of the drawing board, the instance of the class itself, appended to the grid
+* mouseDown - if the mouse is held down it's value is true, otherwise it's false by default
+
+**initDom**
+* Creates the grid in the given size by using gridTemplate and stores the grid and it's each and every small cell as well. A mouseDown eventListener is added so the application remembers when it's pressed down.
+
+**paintGrid**
+* If the mouse is clicked or hovered and pressed down at the same time the function receives the currentMode and currentColor and changes the backgroundColor of the affected small div. If the currentMode is random the backgroundColor will be a randomly generated color.
+
+**clearGrid**
+* This function changes the backgroundColor of every small div inside the grid to default clearing color of the Paint class thus resetting/clearing the drawing board.
+
+**sendAlert**
+* If the size limit has been exceeded an alert is sent to the user to use a valid value.
