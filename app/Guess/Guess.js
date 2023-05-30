@@ -77,7 +77,7 @@ export default class Guess extends Application{
             this.target.innerHTML = "";
             
             this.initDom(radio.querySelector(('input[name="difficulty"]:checked')).id);
-            this.initColor();
+            //this.initColor();
         
         }.bind(this));
     }
@@ -87,6 +87,9 @@ export default class Guess extends Application{
         let r = Math.floor(Math.random()*256);
         let g = Math.floor(Math.random()*256);
         let b = Math.floor(Math.random()*256);
+        console.log(r);
+        console.log(g);
+        console.log(b);
 
         this.color = new Color({Red: r, Green: g, Blue: b});        
 
@@ -224,6 +227,7 @@ export default class Guess extends Application{
 class Color{
     constructor(rgb){
         this.rgb = rgb;
+        console.log(this.rgb);
 
         this.initDom();
     }
