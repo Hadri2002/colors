@@ -95,6 +95,45 @@ Handles the logic of the application itself
 
 * Method is called once the user has guessed three times, displays their best score and the original color's rgb values
 
+## Guess Remix
+### Premise 
+Match the given RGB value by choosing the correct color! No mistakes accepted.
+
+![remix](https://github.com/Hadri2002/colors/assets/99468829/347b8aa9-f967-415c-be50-e3fc4b715b67)
+
+
+### Color Class
+A class for generating colors.
+
+**initStart method**
+
+* Creates a start screen for the game.
+
+**buttonInit method**
+
+* Creates a button with the string of the methods argument.
+
+**initRGB method**
+
+* Generates three random colors. One to be the main color and two other to pick from.
+
+**shuffleArray method**
+
+* Shuffles the array, so the order won't be constant.
+
+**InitDom method**
+
+* Creates the HTML base for the game.
+
+**guessing method**
+
+* Gets an element as an argument, compares it's background color with the main color if the argument's style is the same then generates a new turn. If it's not the same then generates a lose screen.
+
+**newTurn method**
+
+* Basically the initalization but without making the score's value 0.
+
+
 ## Paint
 ### Premise
 Simple pixel art, draw anything by switching between a custom color of your choice and randomly generated colors! You can also erase your mistakes or adjust the number of pixels on the board.
