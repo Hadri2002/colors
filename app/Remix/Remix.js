@@ -23,8 +23,14 @@ export default class Remix extends Application{
     static score = 0;
 
     init(){
+        super.destroy();
         super.init();
-        this.score = 0;
+        this.initStart("start");
+    }
+
+    newTurn(){
+        super.destroy();
+        super.init();
         this.initRGB();
         this.shuffleArray();
         this.initDom();
@@ -39,6 +45,22 @@ export default class Remix extends Application{
         }
       }
 
+    initStart(text){
+        const startContainer = document.createElement('div');
+ 
+        startContainer.appendChild(document.createElement('button'));
+        startContainer.lastChild.innerHTML = text;
+        startContainer.lastChild.addEventListener('click', function(evt){
+            this.target.innerHTML = "";
+            
+            this.initRGB();
+            this.shuffleArray();
+            this.score = 0; 
+            this.initDom();
+        
+        }.bind(this));
+        this.target.appendChild(startContainer); 
+    }
     initDom(){
         this.containerElem = document.createElement('div');
         this.containerElem.className="remix-container";
@@ -46,11 +68,11 @@ export default class Remix extends Application{
         this.containerElem.appendChild(document.createElement('div'));
         this.containerElem.lastChild.className="remix-guess-colors";
 
+        const temp = this.color;
         this.containerElem.lastChild.appendChild(document.createElement('div'));
         this.containerElem.lastChild.lastChild.className="remix-color-1";
         this.containerElem.lastChild.lastChild.style.backgroundColor = `rgb(${this.colors[0].color[0]},${this.colors[0].color[1]},${this.colors[0].color[2]})`;
         //this.containerElem.lastChild.lastChild.addEventListener('click', this.guessing.bind(this));
-        const temp = this.color;
         this.containerElem.lastChild.lastChild.addEventListener('click', function(evt){
             this.color = temp;
             this.guessing(evt);
@@ -102,9 +124,33 @@ export default class Remix extends Application{
         console.log(this.score);
         console.log(this.color);
         console.log(evt);
-            //if(evt.target.style.backgroundColor == `rgb(${this.color.color[0]}, ${this.color.color[1]}, ${this.color.color[2]})`){
-            //this.score += 1;
-        //}
+            if(evt.target.style.backgroundColor == `rgb(${this.color.color[0]}, ${this.color.color[1]}, ${this.color.color[2]})`){
+            this.score += 1;
+            this.newTurn();
+        }
+        else{
+            super.destroy();
+            
+            this.containerElem = document.createElement('div');
+            this.containerElem.className="remix-container";
+
+            this.containerElem.appendChild(document.createElement('div'));
+            this.containerElem.lastChild.className="remix-lyrics";
+
+            this.containerElem.lastChild.appendChild(document.createElement('div'));
+            this.containerElem.lastChild.lastChild.className="remix-color-text";
+            this.containerElem.lastChild.lastChild.appendChild(document.createElement('h1'));
+            this.containerElem.lastChild.lastChild.lastChild.innerHTML = "lúzer geci xddddd";
+
+            this.containerElem.lastChild.appendChild(document.createElement('div'));
+            this.containerElem.lastChild.lastChild.className="remix-score";
+            this.containerElem.lastChild.lastChild.appendChild(document.createElement('h2'));
+            this.containerElem.lastChild.lastChild.lastChild.innerHTML = `Score: ${this.score}`;
+
+            this.target.appendChild(this.containerElem);
+
+            this.initStart("restart");
+        }
     }
 }
 
