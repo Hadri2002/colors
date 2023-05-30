@@ -404,4 +404,34 @@ a{
     padding: 15px;
     background-color: #c2564e;
     color: whitesmoke;
+}.remix-start button {
+  background-color: #202020;
+  box-shadow:1px 1px 5px 2px #68ffff15;
+  justify-content: right;
+  float: right;
+  margin-right: 200px;
+  border-radius: 50px;
+  cursor: pointer;
+  display: inline-block;
+   padding: 7px 20px;
+  text-align: right;
+  /*justify-content: center;*/
+  text-decoration: none;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  color: rgb(44, 178, 178);
+  transition: all 0.3s ease-in;
+}
+
+.remix-start button:hover {
+  color: rgb(71, 255, 246);
+  transition: all 0.3s ease-in;
+}
+.remix-start button:active
+{
+  color: rgb(0, 157, 255);
+  transition: all 0.3s ease-in;
 }
