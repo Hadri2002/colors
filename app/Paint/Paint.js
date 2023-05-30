@@ -1,11 +1,12 @@
 import Application from "../Application.js";
+import GridElem from "./GridElem.js";
 
 export default class Paint extends Application{
     static DEFAULT_COLOR = "#BCC9D5";
     static CLEAR_COLOR = "#f5f5f5";
     static DEFAULT_SIZE = 16;
     static DEFAULT_MODE = "normal";
-    static choices = []
+    static choices = [];
 
     /**
     * @type {HTMLElement}
@@ -13,7 +14,7 @@ export default class Paint extends Application{
     grid = document.querySelector(".paint-grid");
 
     /**
-     * @type {Grid}
+     * @type {GridElem}
      */
     gridElem;
 
@@ -50,7 +51,7 @@ export default class Paint extends Application{
 
         this.grid = paintContainer.appendChild(document.createElement("div"));
         this.grid.className = "paint-grid";
-        Paint.gridElem = new Grid(Paint.DEFAULT_SIZE, this.grid);
+        Paint.gridElem = new GridElem(Paint.DEFAULT_SIZE, this.grid);
         this.addListenersToGrid();
 
         const paintOptionsOne = document.createElement("div");
@@ -69,7 +70,7 @@ export default class Paint extends Application{
         paintGridNumber.max = 100;
         paintGridNumber.min = 2;
         paintGridNumber.addEventListener("input", function(evt){
-            Paint.gridElem = new Grid(evt.target.value, this.grid);
+            Paint.gridElem = new GridElem(evt.target.value, this.grid);
             this.addListenersToGrid();
             paintClear.addEventListener("click", Paint.gridElem.clearGrid.bind(Paint.gridElem));
         }.bind(this))
@@ -163,106 +164,10 @@ export default class Paint extends Application{
         this.changeMode(event);
     }
 
-    /*changeMode = function(event){
-        Paint.choices.forEach(function(item){
-            item.classList.remove("paint-active");
-        });
-        event.target.classList.add("paint-active");
-    }.bind(this);*/
     changeMode(event){
         Paint.choices.forEach(function(item){
             item.classList.remove("paint-active");
         });
         event.target.classList.add("paint-active");
     }
-}
-
-
-class Grid{
-
-    constructor(size, grid){
-        this.size = size;
-        this.domElem = grid;
-        this.initDom();
-        console.log(this.domElem.parentElement.parentElement);
-    }
-    /**
-    * @type {HTMLElement}
-    */
-    gridElem;
-
-    /**
-    * @type {boolean}
-    */
-    mouseDown = false;
-
-    initDom(){
-        
-        if(this.size < 2){
-            this.sendAlert(2);
-            this.size = 2;
-        }
-        
-        if(this.size > 100){
-            this.sendAlert(100);
-            this.size = 100;
-        }
-        if (this.size === "" || this.size === undefined || this.size === null){
-            this.size = Paint.DEFAULT_SIZE;
-        }
-        
-        console.log("Grid class, megadott size: ", this.size);
-        console.log(this.domElem);
-        this.domElem.innerHTML = "";
-        this.gridElem = this.domElem.appendChild(document.createElement('div'));
-        this.gridElem.className = "paint-grid-elements";
-        this.gridElem.style.gridTemplateColumns = `repeat(${this.size}, 1fr)`;
-        this.gridElem.style.gridTemplateRows = `repeat(${this.size}, 1fr)`;
-        for(let i = 0; i < this.size * this.size; i++){
-            this.gridElem.appendChild(document.createElement("div"));
-            this.gridElem.lastChild.className = "paint-gridsquare";
-        }
-        this.grids = [...this.gridElem.children];
-        this.domElem.addEventListener("mousedown", (event) => {
-            event.preventDefault();
-            this.mouseDown = true;
-        })
-        this.domElem.addEventListener("mouseup", (event) => {
-            event.preventDefault();
-            this.mouseDown = false;
-        })
-    }
-
-    paintGrid(event, currentMode, currentColor){
-        if(!this.mouseDown) return;
-        if(currentMode === "normal"){
-            event.target.style.backgroundColor = currentColor;
-        }
-        else{
-            let red = Math.floor(Math.random() * 256)
-            let green = Math.floor(Math.random() * 256)
-            let blue = Math.floor(Math.random() * 256)
-            event.target.style.backgroundColor = `rgb(${red},${green},${blue})`;
-        }
-    }
-
-    clearGrid(){
-        this.grids.forEach(function(item){
-            item.style.backgroundColor = Paint.CLEAR_COLOR;
-        });
-    }
-
-    sendAlert = function(limit){
-        let alert = this.domElem.parentElement.parentElement.appendChild(document.createElement("div"));
-        alert.className = "alert";
-        if(limit === 2){
-            alert.textContent = "Grid size can't be smaller than 2!!";
-        }
-        else{
-            alert.textContent = "Grid size can't be greater than 100!!";
-        }
-        setTimeout(function () {
-            alert.remove();
-        }, 3000);
-    }.bind(this);
 }
