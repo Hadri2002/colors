@@ -190,6 +190,14 @@ export default class Gradient extends Application{
             if(fixedColors.includes(Gradient.colors[i])) {
                 this.gridElem.appendChild(Gradient.colors[i].domElem);
                 this.gridElem.lastChild.innerHTML = "·";
+
+                if((Gradient.colors[i].rgb[0]*0.299 + Gradient.colors[i].rgb[1]*0.587 + Gradient.colors[i].rgb[2]*0.114) > 186){
+                    this.gridElem.lastChild.style.color = "black";
+                }
+                else{
+                    this.gridElem.lastChild.style.color = "white";
+                }
+                
                 Gradient.colors[i].actualPlace = i;
             }
             else {
