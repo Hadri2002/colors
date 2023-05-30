@@ -45,9 +45,24 @@ export default class Remix extends Application{
         }
       }
 
-    initStart(text){
+    initStart(){
         const startContainer = document.createElement('div');
- 
+        this.target.appendChild(startContainer);  
+        startContainer.className = "remix-start";
+
+        startContainer.append(document.createElement("h1"));
+        startContainer.lastChild.innerHTML = "Color Guessing Game Remix";
+
+        startContainer.appendChild(document.createElement("div"));
+        startContainer.lastChild.innerHTML = "Match the given RGB value by choosing the correct color! No mistakes are accepted.";
+        this.target.appendChild(startContainer); 
+        this.buttonInit("Start");
+    }
+
+    buttonInit(text){
+        const startContainer = document.createElement('div');
+        this.target.appendChild(startContainer);  
+        startContainer.className = "remix-start";
         startContainer.appendChild(document.createElement('button'));
         startContainer.lastChild.innerHTML = text;
         startContainer.lastChild.addEventListener('click', function(evt){
@@ -100,7 +115,7 @@ export default class Remix extends Application{
         this.containerElem.lastChild.appendChild(document.createElement('div'));
         this.containerElem.lastChild.lastChild.className="remix-color-text";
         this.containerElem.lastChild.lastChild.appendChild(document.createElement('h1'));
-        this.containerElem.lastChild.lastChild.lastChild.innerHTML = `Color -> (${this.color.color[0]}, ${this.color.color[1]}, ${this.color.color[2]})`;
+        this.containerElem.lastChild.lastChild.lastChild.innerHTML = `C O L O R -> (${this.color.color[0]}, ${this.color.color[1]}, ${this.color.color[2]})`;
 
         this.containerElem.lastChild.appendChild(document.createElement('div'));
         this.containerElem.lastChild.lastChild.className="remix-score";
@@ -140,16 +155,16 @@ export default class Remix extends Application{
             this.containerElem.lastChild.appendChild(document.createElement('div'));
             this.containerElem.lastChild.lastChild.className="remix-color-text";
             this.containerElem.lastChild.lastChild.appendChild(document.createElement('h1'));
-            this.containerElem.lastChild.lastChild.lastChild.innerHTML = "lúzer geci xddddd";
+            this.containerElem.lastChild.lastChild.lastChild.innerHTML = "Wrong color has been picked.";
 
             this.containerElem.lastChild.appendChild(document.createElement('div'));
             this.containerElem.lastChild.lastChild.className="remix-score";
             this.containerElem.lastChild.lastChild.appendChild(document.createElement('h2'));
-            this.containerElem.lastChild.lastChild.lastChild.innerHTML = `Score: ${this.score}`;
+            this.containerElem.lastChild.lastChild.lastChild.innerHTML = `Your Score: ${this.score}`;
 
             this.target.appendChild(this.containerElem);
 
-            this.initStart("restart");
+            this.buttonInit("restart");
         }
     }
 }

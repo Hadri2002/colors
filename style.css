@@ -416,5 +416,40 @@ a{
 }
 .remix-color-1, .remix-color-2, .remix-color-3
 {
+  transition: 0.5s;
   width: 33%;
+  margin: 50px;
+  border-radius: 50px;
+  border: #202020;
+  border-width: thick;
+}
+
+.remix-color-1:hover, .remix-color-2:hover, .remix-color-3:hover{
+  margin-top: 7%;
+  transition: 0.5s;
+  padding: 50px;
+  margin: 50px;
+  width: 33%;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 54px 55px, rgba(0, 0, 0, 0.5) 0px -12px 30px, rgba(0, 0, 0, 0.50) 0px 4px 6px, rgba(0, 0, 0, 0.5) 0px 12px 13px, rgba(0, 0, 0, 0.5) 0px -3px 5px;
+}
+.remix-score{
+  padding: 50px;
+}
+.remix-color-text{
+  padding: 50px;
+}
+.remix-start{
+  width: 500px;
+  margin: auto;
+}
+.remix-start div{
+  margin: auto;
+  padding: auto;
+  height: 100px;
+}
+.remix-start h1{
+  margin: auto;
+}
+.remix-start button{
+  margin: auto;
 }
