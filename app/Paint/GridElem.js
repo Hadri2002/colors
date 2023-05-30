@@ -6,7 +6,6 @@ export default class GridElem{
         this.size = size;
         this.grid = grid;
         this.initDom();
-        console.log(this.grid.parentElement.parentElement);
     }
     /**
     * @type {HTMLElement}
@@ -20,6 +19,7 @@ export default class GridElem{
 
     initDom(){
         
+        // making sure the board size remains between 2 and 100
         if(this.size < 2){
             this.sendAlert(2);
             this.size = 2;
@@ -29,12 +29,12 @@ export default class GridElem{
             this.sendAlert(100);
             this.size = 100;
         }
+
         if (this.size === "" || this.size === undefined || this.size === null){
             this.size = Paint.DEFAULT_SIZE;
         }
         
-        console.log("Grid class, megadott size: ", this.size);
-        console.log(this.grid);
+        // initializing the drawing board
         this.grid.innerHTML = "";
         this.domElem = this.grid.appendChild(document.createElement('div'));
         this.domElem.className = "paint-grid-elements";
@@ -45,6 +45,8 @@ export default class GridElem{
             this.domElem.lastChild.className = "paint-gridsquare";
         }
         this.grids = [...this.domElem.children];
+
+        // making the "pencil" draggable by using a mouseDown mechanic
         this.grid.addEventListener("mousedown", (event) => {
             event.preventDefault();
             this.mouseDown = true;
@@ -55,6 +57,7 @@ export default class GridElem{
         })
     }
 
+    // coloring depending on the currentMode (erasing is coloring as well) 
     paintGrid(event, currentMode, currentColor){
         if(!this.mouseDown) return;
         if(currentMode === "normal"){
@@ -74,6 +77,7 @@ export default class GridElem{
         });
     }
 
+    // everytime the size limits are broken we send an alert to the user by creating an alert div for three seconds
     sendAlert = function(limit){
         let alert = this.grid.parentElement.parentElement.appendChild(document.createElement("div"));
         alert.className = "alert";
