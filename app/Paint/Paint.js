@@ -13,14 +13,9 @@ export default class Paint extends Application{
     grid = document.querySelector(".paint-grid");
 
     /**
-    * @type {HTMLElement}
-    */
-    gridElem = document.querySelector(".paint-grid-elements");
-
-    /**
-    * @type {boolean}
-    */
-    mouseDown = false;
+     * @type {Grid}
+     */
+    gridElem;
 
     /**
     * @type {String}
@@ -55,8 +50,8 @@ export default class Paint extends Application{
 
         this.grid = paintContainer.appendChild(document.createElement("div"));
         this.grid.className = "paint-grid";
-        this.initGrid(Paint.DEFAULT_SIZE);
-
+        Paint.gridElem = new Grid(Paint.DEFAULT_SIZE, this.grid);
+        this.addListenersToGrid();
 
         const paintOptionsOne = document.createElement("div");
         paintContainer.appendChild(paintOptionsOne);
@@ -74,7 +69,9 @@ export default class Paint extends Application{
         paintGridNumber.max = 100;
         paintGridNumber.min = 2;
         paintGridNumber.addEventListener("input", function(evt){
-            this.initGrid(evt.target.value);
+            Paint.gridElem = new Grid(evt.target.value, this.grid);
+            this.addListenersToGrid();
+            paintClear.addEventListener("click", Paint.gridElem.clearGrid.bind(Paint.gridElem));
         }.bind(this))
         
         const paintColorPicker = document.createElement("div");
@@ -122,51 +119,22 @@ export default class Paint extends Application{
         paintClear.className = "paint-choice";
         paintClear.id = "paint-clear";
         paintClear.textContent = "Clear board";
-        paintClear.addEventListener("click", this.clearGrid.bind(this));
-        Paint.choices.push(paintClear);
-
-        //console.log("choices: ",this.choices);       
+        paintClear.addEventListener("click", Paint.gridElem.clearGrid.bind(Paint.gridElem));
+        Paint.choices.push(paintClear);   
     }
 
-    initGrid(size){
-        console.log("megadott size: ",size);
-        if(size < 2){
-            this.sendAlert(2);
-            size = 2;
-        }
-        
-        if(size > 100){
-            this.sendAlert(100);
-            size = 100;
-        }
-        if (size === "" || size === undefined || size === null){
-            size = Paint.DEFAULT_SIZE;
-        }
-        console.log("limitelt size: ", size);
-        console.log(this.grid);
-        this.grid.innerHTML = "";
-        this.gridElem = this.grid.appendChild(document.createElement('div'));
-        this.gridElem.className = "paint-grid-elements";
-        this.gridElem.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
-        this.gridElem.style.gridTemplateRows = `repeat(${size}, 1fr)`;
-        for(let i = 0; i < size * size; i++){
-            this.gridElem.appendChild(document.createElement("div"));
-            this.gridElem.lastChild.className = "paint-gridsquare";
-            this.gridElem.lastChild.addEventListener("click", (event) => {
-                this.mouseDown = true;
-                const paintGridClick = this.paintGrid.bind(this)
-                paintGridClick(event);
-                this.mouseDown = false;
+    addListenersToGrid(){
+        Paint.gridElem.grids.forEach(item => {
+            item.addEventListener("click", (event) => {
+                Paint.gridElem.mouseDown = true;
+                const paintGridClick = Paint.gridElem.paintGrid.bind(Paint.gridElem)
+                paintGridClick(event, this.currentMode, this.currentColor);
+                Paint.gridElem.mouseDown = false;
             });
-            this.gridElem.lastChild.addEventListener("mouseover", this.paintGrid.bind(this));
-        }
-        this.grid.addEventListener("mousedown", (event) => {
-            event.preventDefault();
-            this.mouseDown = true;
-        })
-        this.grid.addEventListener("mouseup", (event) => {
-            event.preventDefault();
-            this.mouseDown = false;
+            item.addEventListener("mouseover", (event) => {
+                const paintGridOver = Paint.gridElem.paintGrid.bind(Paint.gridElem)
+                paintGridOver(event, this.currentMode, this.currentColor);
+            });
         })
     }
 
@@ -189,10 +157,86 @@ export default class Paint extends Application{
         this.changeMode(event);
     }
 
-    paintGrid(event){
+    erase(event){
+        this.currentColor = Paint.CLEAR_COLOR;
+        this.currentMode = "normal";
+        this.changeMode(event);
+    }
+
+    /*changeMode = function(event){
+        Paint.choices.forEach(function(item){
+            item.classList.remove("paint-active");
+        });
+        event.target.classList.add("paint-active");
+    }.bind(this);*/
+    changeMode(event){
+        Paint.choices.forEach(function(item){
+            item.classList.remove("paint-active");
+        });
+        event.target.classList.add("paint-active");
+    }
+}
+
+
+class Grid{
+
+    constructor(size, grid){
+        this.size = size;
+        this.domElem = grid;
+        this.initDom();
+        console.log(this.domElem.parentElement.parentElement);
+    }
+    /**
+    * @type {HTMLElement}
+    */
+    gridElem;
+
+    /**
+    * @type {boolean}
+    */
+    mouseDown = false;
+
+    initDom(){
+        
+        if(this.size < 2){
+            this.sendAlert(2);
+            this.size = 2;
+        }
+        
+        if(this.size > 100){
+            this.sendAlert(100);
+            this.size = 100;
+        }
+        if (this.size === "" || this.size === undefined || this.size === null){
+            this.size = Paint.DEFAULT_SIZE;
+        }
+        
+        console.log("Grid class, megadott size: ", this.size);
+        console.log(this.domElem);
+        this.domElem.innerHTML = "";
+        this.gridElem = this.domElem.appendChild(document.createElement('div'));
+        this.gridElem.className = "paint-grid-elements";
+        this.gridElem.style.gridTemplateColumns = `repeat(${this.size}, 1fr)`;
+        this.gridElem.style.gridTemplateRows = `repeat(${this.size}, 1fr)`;
+        for(let i = 0; i < this.size * this.size; i++){
+            this.gridElem.appendChild(document.createElement("div"));
+            this.gridElem.lastChild.className = "paint-gridsquare";
+        }
+        this.grids = [...this.gridElem.children];
+        this.domElem.addEventListener("mousedown", (event) => {
+            event.preventDefault();
+            this.mouseDown = true;
+        })
+        this.domElem.addEventListener("mouseup", (event) => {
+            event.preventDefault();
+            this.mouseDown = false;
+        })
+    }
+
+    paintGrid(event, currentMode, currentColor){
         if(!this.mouseDown) return;
-        if(this.currentMode === "normal"){
-            event.target.style.backgroundColor = this.currentColor;
+        if(currentMode === "normal"){
+            event.target.style.backgroundColor = currentColor;
         }
         else{
             let red = Math.floor(Math.random() * 256)
@@ -202,28 +246,14 @@ export default class Paint extends Application{
         }
     }
 
-    erase(event){
-        this.currentColor = Paint.CLEAR_COLOR;
-        this.currentMode = "normal";
-        this.changeMode(event);
-    }
-
     clearGrid(){
-        let grids = [...this.gridElem.children]
-        grids.forEach(function(item){
+        this.grids.forEach(function(item){
             item.style.backgroundColor = Paint.CLEAR_COLOR;
         });
     }
 
-    changeMode = function(event){
-        Paint.choices.forEach(function(item){
-            item.classList.remove("paint-active");
-        });
-        event.target.classList.add("paint-active");
-    }.bind(this);
-
     sendAlert = function(limit){
-        let alert = this.target.appendChild(document.createElement("div"));
+        let alert = this.domElem.parentElement.parentElement.appendChild(document.createElement("div"));
         alert.className = "alert";
         if(limit === 2){
             alert.textContent = "Grid size can't be smaller than 2!!";
@@ -233,6 +263,6 @@ export default class Paint extends Application{
         }
         setTimeout(function () {
             alert.remove();
-        }, 4000);
+        }, 3000);
     }.bind(this);
 }
