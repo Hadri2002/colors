@@ -99,7 +99,7 @@ Handles the logic of the application itself
 ### Premise
 Simple pixel art, draw anything by switching between a custom color of your choice and randomly generated colors! You can also erase your mistakes or adjust the number of pixels on the board.
 
-kephelye
+![paint](https://github.com/Hadri2002/colors/assets/93374277/8ddb3fb7-bca0-4d62-b7bb-02706d5e2d76)
 
 
 ### Paint Class
