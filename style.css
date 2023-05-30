@@ -407,18 +407,18 @@ a{
     padding: 15px;
     background-color: #c2564e;
     color: whitesmoke;
+
+    /* Guess Remix*/
+
 }.remix-start button {
+  text-align: center;
   background-color: #202020;
   box-shadow:1px 1px 5px 2px #68ffff15;
-  justify-content: right;
-  float: right;
-  margin-right: 200px;
+  justify-content: center;
   border-radius: 50px;
   cursor: pointer;
   display: inline-block;
-   padding: 7px 20px;
-  text-align: right;
-  /*justify-content: center;*/
+  padding: 7px 20px;
   text-decoration: none;
   border: 0;
   font-size: 16px;
@@ -439,8 +439,6 @@ a{
   transition: all 0.3s ease-in;
 }
 
-/* Guess Remix*/
-
 .remix-guess-colors
 {
   height: 300px;
@@ -458,6 +456,7 @@ a{
 }
 
 .remix-color-1:hover, .remix-color-2:hover, .remix-color-3:hover{
+  border: 10px solid rgba(255, 255, 255, 0.562);
   margin-top: 7%;
   transition: 0.5s;
   padding: 50px;
@@ -466,14 +465,31 @@ a{
   box-shadow: rgba(0, 0, 0, 0.5) 0px 54px 55px, rgba(0, 0, 0, 0.5) 0px -12px 30px, rgba(0, 0, 0, 0.50) 0px 4px 6px, rgba(0, 0, 0, 0.5) 0px 12px 13px, rgba(0, 0, 0, 0.5) 0px -3px 5px;
 }
 .remix-score{
-  padding: 50px;
+  padding: 0px;
+  margin-left: 69px;
 }
 .remix-color-text{
   padding: 50px;
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.remix-score-end{
+  padding: 0px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.remix-color-text-end{
+  padding: 50px;
+  text-align: center;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  margin-top: 20px
 }
 .remix-start{
   width: 500px;
   margin: auto;
+  text-align: center;
 }
 .remix-start div{
   margin: auto;

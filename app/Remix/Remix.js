@@ -25,7 +25,7 @@ export default class Remix extends Application{
     init(){
         super.destroy();
         super.init();
-        this.initStart("start");
+        this.initStart("Start!");
     }
 
     newTurn(){
@@ -153,18 +153,18 @@ export default class Remix extends Application{
             this.containerElem.lastChild.className="remix-lyrics";
 
             this.containerElem.lastChild.appendChild(document.createElement('div'));
-            this.containerElem.lastChild.lastChild.className="remix-color-text";
+            this.containerElem.lastChild.lastChild.className="remix-color-text-end";
             this.containerElem.lastChild.lastChild.appendChild(document.createElement('h1'));
             this.containerElem.lastChild.lastChild.lastChild.innerHTML = "Wrong color has been picked.";
 
             this.containerElem.lastChild.appendChild(document.createElement('div'));
-            this.containerElem.lastChild.lastChild.className="remix-score";
+            this.containerElem.lastChild.lastChild.className="remix-score-end";
             this.containerElem.lastChild.lastChild.appendChild(document.createElement('h2'));
             this.containerElem.lastChild.lastChild.lastChild.innerHTML = `Your Score: ${this.score}`;
 
             this.target.appendChild(this.containerElem);
 
-            this.buttonInit("restart");
+            this.buttonInit("Restart");
         }
     }
 }
