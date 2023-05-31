@@ -51,10 +51,10 @@ export default class Memory extends Application{
         startContainer.className = "chooser";
 
         startContainer.append(document.createElement("h1"));
-        startContainer.lastChild.textContent = "Memory Sequence Game";
+        startContainer.lastChild.textContent = "Sequence memory Game";
 
         startContainer.appendChild(document.createElement("div"));
-        startContainer.lastChild.textContent = "Click the shuffled color boxes in the original order to win in this color themed memory sequence mini game.";
+        startContainer.lastChild.textContent = "Click the shuffled color boxes in the original order to win in this color themed sequence memory mini game.";
 
         startContainer.append(document.createElement("img"));
         startContainer.lastChild.src = "app/Memory/src/memory2.PNG";
