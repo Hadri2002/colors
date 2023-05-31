@@ -93,6 +93,26 @@ export default class Hangman extends Application{
         this.target.lastChild.innerHTML = "Refresh";
         this.target.lastChild.setAttribute("onClick", "window.location.reload();");
     }
+
+
+    removeClickListenersAndSetClass() {
+        // get all div elements whose id starts with "key_"
+        const keyDivs = document.querySelectorAll('div[id^="key_"]');
+    
+        // loop through each keyDiv element
+        keyDivs.forEach((keyDiv) => {
+        let keyletterid= keyDiv.id;
+        if(keyletterid!= ("hasznaltkey")){
+            // remove the click event listener
+            keyDiv.removeEventListener('click', null);
+        
+            // set the class to "hasznaltkey"
+            keyletterid = ("hasznaltkey");
+        }
+        
+        });
+    }
+  
  
     // function to update the guesses
     updateGuesses(){
@@ -170,13 +190,19 @@ export default class Hangman extends Application{
             win.innerHTML  = `<h2 class="win">You Win!</br>The word was: `+ this.answer +`.</br>Congratulation!</h2>`;
             document.getElementById("kep").src = "app/Hangman/photos/akasztofaWIN.png";
             this.locked = true;
-            }
-            else if (this.incorrectGuesses.size === 6) {
-              const lose = document.getElementById("word");
-              lose.innerHTML = `<h2 class="lose">Game Over!</br>The word was: `+ this.answer +`. </br>Try again!</h2>`;
-              document.getElementById("kep").src = "app/Hangman/photos/akasztofaLOSE.png";
-              this.locked = true;
-          }
+            this.removeClickListenersAndSetClass();
+            console.log("hasznaltkey lett minden");
+
+        }
+        else if (this.incorrectGuesses.size === 6) {
+            const lose = document.getElementById("word");
+            lose.innerHTML = `<h2 class="lose">Game Over!</br>The word was: `+ this.answer +`. </br>Try again!</h2>`;
+            document.getElementById("kep").src = "app/Hangman/photos/akasztofaLOSE.png";
+            this.locked = true;
+            this.removeClickListenersAndSetClass();
+            console.log("hasznaltkey lett minden");
+              
+        }
 }
  
  

@@ -148,26 +148,31 @@ a{
     left: 0;
     height: 25px;
     width: 25px;
-    background-color: #eee;
+    background-color: #343434;
     border-radius: 50%;
+    color:#343434;
   }
   
   .radio:hover input ~ .checkmark {
-    background-color: #ccc;
+    background-color: #05cae92f;
+    color:#343434;
   }
   
   .radio input:checked ~ .checkmark {
-    background-color: #2196F3;
+    background-color:  #68ffff;
+    color:#343434;
   }
   
   .checkmark:after {
     content: "";
     position: absolute;
     display: none;
+    color:#343434;
   }
   
   .radio input:checked ~ .checkmark:after {
     display: block;
+    color:#343434;
   }
   
   .radio .checkmark:after {
@@ -176,7 +181,35 @@ a{
     width: 8px;
     height: 8px;
     border-radius: 50%;
-    background: white;
+    background: #343434;
+    color:#343434;
+  }
+
+  button {
+    background-color: #202020;
+    box-shadow:1px 1px 5px 2px #68ffff15;
+    border-radius: 50px;
+    cursor: pointer;
+    display: inline-block;
+    padding: 7px 20px;
+    text-decoration: none;
+    border: 0;
+    font-size: 16px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    color: rgb(44, 178, 178);
+    transition: all 0.3s ease-in;
+  }
+  
+  button:hover {
+    color: rgb(71, 255, 246);
+    transition: all 0.3s ease-in;
+  }
+  button:active
+  {
+    color: rgb(0, 157, 255);
+    transition: all 0.3s ease-in;
   }
 
   .Button{
@@ -249,7 +282,96 @@ a{
   padding:20px;
   display: flex;
   flex-direction: column;
+  width: 20%;
 }
+
+.gradient-sizeinput input[type=range] {
+  -webkit-appearance: none;
+  border-radius: 30px;
+  margin: 15px;
+}
+.gradient-sizeinput input[type=range]:focus {
+  outline: none;
+}
+.gradient-sizeinput input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 15px;
+  cursor: pointer;
+  box-shadow: 2px 2px 3px #000000;
+  background: #565D66;
+  border-radius: 24px;
+  border: 0px solid #000000;
+}
+.gradient-sizeinput input[type=range]::-webkit-slider-thumb {
+  box-shadow: 2px 2px 4px #000000;
+  border: 0px solid #000000;
+  height: 15px;
+  width: 15px;
+  border-radius: 41px;
+  background: rgb(44, 178, 178);;
+  cursor: pointer;
+  margin-bottom: 2.5px;
+  -webkit-appearance: none;
+}
+.gradient-sizeinput input[type=range]:focus::-webkit-slider-runnable-track {
+  background: rgba(44, 178, 178, 0.459);
+}
+.gradient-sizeinput input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 15px;
+  cursor: pointer;
+  box-shadow: 2px 2px 3px #000000;
+  background: #565D66;
+  border-radius: 24px;
+  border: 0px solid #000000;
+}
+.gradient-sizeinput input[type=range]::-moz-range-thumb {
+  box-shadow: 2px 2px 4px #000000;
+  border: 0px solid #000000;
+  height: 15px;
+  width: 15px;
+  border-radius: 41px;
+  margin-bottom: 2.5px;
+  background: rgb(44, 178, 178);;
+  cursor: pointer;
+}
+.gradient-sizeinput input[type=range]::-ms-track {
+  width: 100%;
+  height: 15px;
+  cursor: pointer;
+  background: transparent;
+  border-color: transparent;
+  color: transparent;
+}
+.gradient-sizeinput input[type=range]::-ms-fill-lower {
+  background:rgba(44, 178, 178, 0.378);
+  border: 0px solid #000000;
+  border-radius: 48px;
+  box-shadow: 2px 2px 3px #000000;
+}
+.gradient-sizeinput input[type=range]::-ms-fill-upper {
+  background: #565D66;
+  border: 0px solid #000000;
+  border-radius: 48px;
+  box-shadow: 2px 2px 3px #000000;
+}
+.gradient-sizeinput input[type=range]::-ms-thumb {
+  box-shadow: 2px 2px 4px #000000;
+  border: 0px solid #000000;
+  height: 15px;
+  width: 15px;
+  margin-bottom: 2.5px;
+  border-radius: 41px;
+  background:rgb(44, 178, 178);;
+  cursor: pointer;
+}
+.gradient-sizeinput input[type=range]:focus::-ms-fill-lower {
+  background:rgba(44, 178, 178, 0.378);
+}
+.gradient-sizeinput input[type=range]:focus::-ms-fill-upper {
+  background: #565D66;
+}
+
 
 .gradient-win{
   position: absolute;
@@ -364,13 +486,27 @@ a{
 
 #paint-grid-number{
     width: 200px;
-    padding: 8px 12px;
-    border: 1px solid #BCC9D5;
-    background-color: whitesmoke;
+    padding: 10px 20px;
+    background-color: #202020;
+    box-shadow:1px 1px 5px 2px #68ffff15;
+    border-radius: 5px;
+    cursor: pointer;
+    color: rgb(44, 178, 178);
+    transition: all 0.3s ease-in;
+    border: 0;
 }
 
 #paint-grid-number:hover{
     transform: scale(1.1);
+    color: rgb(44, 178, 178);
+    transition: all 0.3s ease-in;
+    border: 0;
+}
+#paint-grid-number:active{
+  transform: scale(1.1);
+  color: rgb(44, 178, 178);
+  transition: all 0.3s ease-in;
+  border: 0;
 }
 
 .paint-color-picker{
@@ -381,9 +517,10 @@ a{
 }
 
 #paint-colorpicker{
-    height: 51px;
+    height: 50px;
     padding: 0;
     border: none;
+    border-radius: 5px;
     background-color: #202020;
 }
 
@@ -392,6 +529,33 @@ a{
     transform: scale(1.1);
 }
 
+.paint-choice {
+  background-color: #202020;
+  box-shadow:1px 1px 5px 2px #68ffff15;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-block;
+  padding: 7px 20px;
+  text-decoration: none;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  color: rgb(44, 178, 178);
+  transition: all 0.3s ease-in;
+}
+
+.paint-choice:hover {
+  color: rgb(71, 255, 246);
+  transition: all 0.3s ease-in;
+}
+.paint-choice:active
+{
+  color: rgb(0, 157, 255);
+  transition: all 0.3s ease-in;
+}
+/*
 .paint-choice{
     border: 1px solid #BCC9D5;
     padding: 12px 20px;
@@ -408,7 +572,7 @@ a{
     background-color: #87919B;
     color: whitesmoke;
 }
-
+*/
 .alert{
     position: absolute;
     top: 2%;
