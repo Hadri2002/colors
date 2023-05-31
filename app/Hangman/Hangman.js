@@ -130,6 +130,8 @@ export default class Hangman extends Application{
       }
  
     makeGuess(letter, i, answer){
+
+
         let keyletter = document.getElementById("hasznaltkey");
  
         this.answer = answer;
@@ -169,17 +171,30 @@ export default class Hangman extends Application{
             const win = document.getElementById("word");
             win.innerHTML  = `<h2 class="win">You Win!</br>The word was: `+ this.answer +`.</br>Congratulation!</h2>`;
             document.getElementById("kep").src = "app/Hangman/photos/akasztofaWIN.png";
+            this.gameEnd();
             this.locked = true;
             }
             else if (this.incorrectGuesses.size === 6) {
               const lose = document.getElementById("word");
               lose.innerHTML = `<h2 class="lose">Game Over!</br>The word was: `+ this.answer +`. </br>Try again!</h2>`;
               document.getElementById("kep").src = "app/Hangman/photos/akasztofaLOSE.png";
+              this.gameEnd();
               this.locked = true;
           }
 }
  
- 
+    gameEnd(){
+        console.log("Im doing it");
+        const letters = document.getElementById("keyboard");
+        console.log(letters.children);
+
+        for(let i = 0; i < letters.children.length; i++){
+            console.log(letters.children[i]);
+            letters.children[i].id = "hasznaltkey";
+            letters.children[i].replaceWith(letters.children[i].cloneNode(true));
+        }
+    }
+
 }
 class Word{
     constructor(){
