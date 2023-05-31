@@ -1,7 +1,12 @@
 import Application from "../Application.js";
 
 export default class Memory extends Application{
-    static colors = [];
+    //static colors = [];
+
+    /**
+     * @type {Array}
+     */
+    colors;
 
     /**
      * @type {HTMLElement}
@@ -16,7 +21,7 @@ export default class Memory extends Application{
     /**
      * @type {Number}
      */
-    static counter = 0;
+    counter = 0;
 
     /**
      * @type {Number}
@@ -26,7 +31,7 @@ export default class Memory extends Application{
     /**
      * @type {Number}
      */
-    static colorsNumber = 3;
+    colorsNumber = 3;
 
     /**
      * @type {Number}
@@ -95,9 +100,9 @@ export default class Memory extends Application{
             this.lives = 1;
         }
         this.round = 1;
-        Memory.colorsNumber = 3;
-        Memory.counter = 0;
-        Memory.colors = [];
+        this.colorsNumber = 3;
+        this.counter = 0;
+        this.colors = [];
 
         const memoryContainer = document.createElement("div");
         this.target.appendChild(memoryContainer);
@@ -131,10 +136,10 @@ export default class Memory extends Application{
     }
 
     async initColors(){
-        for(let i = 0; i < Memory.colorsNumber; i++){
+        for(let i = 0; i < this.colorsNumber; i++){
             const color = new Color(i);
             await color.data;
-            Memory.colors.push(color);
+            this.colors.push(color);
             this.colorsElement.appendChild(color.domElem);
         }
         
@@ -145,26 +150,26 @@ export default class Memory extends Application{
 
     shuffleColors(){
         this.colorsElement.innerHTML = "";
-        for (let i = Memory.colors.length - 1; i > 0; i--) {
+        for (let i = this.colors.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            const temp = Memory.colors[i];
-            Memory.colors[i] = Memory.colors[j];
-            Memory.colors[j] = temp;
+            const temp = this.colors[i];
+            this.colors[i] = this.colors[j];
+            this.colors[j] = temp;
         }
-        for(let i = 0; i < Memory.colors.length; i++){
-            this.colorsElement.appendChild(Memory.colors[i].domElem);
+        for(let i = 0; i < this.colors.length; i++){
+            this.colorsElement.appendChild(this.colors[i].domElem);
             if(this.round === 1){
-                Memory.colors[i].domElem.addEventListener('choose', this.colorCheck.bind(this)); 
+                this.colors[i].domElem.addEventListener('choose', this.colorCheck.bind(this)); 
             }
         }
     }
 
     colorCheck(evt){
-        console.log(evt.detail.originalPlace,"counter: ", Memory.counter)
-        if(evt.detail.originalPlace === Memory.counter){
+        console.log(evt.detail.originalPlace,"counter: ", this.counter)
+        if(evt.detail.originalPlace === this.counter){
             evt.detail.color.fixed = true;
             evt.target.classList.add("memory-checked");
-            Memory.counter++;
+            this.counter++;
         }
         else{
             this.lives--;
@@ -174,7 +179,7 @@ export default class Memory extends Application{
             this.target.innerHTML = "";
             this.initEnd();
         }
-        if(Memory.counter === Memory.colorsNumber){
+        if(this.counter === this.colorsNumber){
             console.log("nyertél egy kört hehe");
             setTimeout(()=>{
                 this.startNextRound();
@@ -202,15 +207,15 @@ export default class Memory extends Application{
     }
 
     async startNextRound(){
-        Memory.colors.forEach(item => {
+        this.colors.forEach(item => {
             item.domElem.classList.remove("memory-checked");
             item.fixed = false;
         });
-        const color = new Color(Memory.colorsNumber);
+        const color = new Color(this.colorsNumber);
         await color.data;
-        Memory.colors.push(color);
-        Memory.counter = 0;
-        Memory.colorsNumber++;
+        this.colors.push(color);
+        this.counter = 0;
+        this.colorsNumber++;
         this.colorsElement.appendChild(color.domElem);
         setTimeout(() => {
             color.domElem.addEventListener("choose", this.colorCheck.bind(this));
