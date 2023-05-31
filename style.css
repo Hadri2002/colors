@@ -577,3 +577,17 @@ a{
   color: rgb(71, 255, 246);
   transition: all 0.3s ease-in;
 }
+
+.memory-ready{
+  position: absolute;
+  top: 2%;
+  left: 27.5%;
+  z-index: 1;
+  width: 45%;
+  text-align: center;
+  padding: 15px;
+  background-color: rgb(188, 201, 213);
+  border-radius: 50px;
+  color: #202020;
+  font-size: 20px;
+}

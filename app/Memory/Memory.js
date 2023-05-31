@@ -1,7 +1,6 @@
 import Application from "../Application.js";
 
 export default class Memory extends Application{
-    //static colors = [];
 
     /**
      * @type {Array}
@@ -142,24 +141,32 @@ export default class Memory extends Application{
             this.colors.push(color);
             this.colorsElement.appendChild(color.domElem);
         }
-        
+        const ready = document.createElement("div");
+        ready.className = "memory-ready";
+        ready.textContent = "Get ready..."
+        this.target.parentElement.appendChild(ready);
         setTimeout(() => {
             this.shuffleColors();
+            ready.remove();
         }, 4000);
     }
 
     shuffleColors(){
         this.colorsElement.innerHTML = "";
-        for (let i = this.colors.length - 1; i > 0; i--) {
+        const shuffledColors = [];
+        this.colors.forEach(item => {
+            shuffledColors.push(item);
+        });
+        for (let i = shuffledColors.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            const temp = this.colors[i];
-            this.colors[i] = this.colors[j];
-            this.colors[j] = temp;
+            const temp = shuffledColors[i];
+            shuffledColors[i] = shuffledColors[j];
+            shuffledColors[j] = temp;
         }
         for(let i = 0; i < this.colors.length; i++){
-            this.colorsElement.appendChild(this.colors[i].domElem);
+            this.colorsElement.appendChild(shuffledColors[i].domElem);
             if(this.round === 1){
-                this.colors[i].domElem.addEventListener('choose', this.colorCheck.bind(this)); 
+                shuffledColors[i].domElem.addEventListener('choose', this.colorCheck.bind(this)); 
             }
         }
     }
@@ -180,10 +187,10 @@ export default class Memory extends Application{
             this.initEnd();
         }
         if(this.counter === this.colorsNumber){
-            console.log("nyertél egy kört hehe");
+            console.log("nyertél egy kört hehe", this.colors);
             setTimeout(()=>{
                 this.startNextRound();
-            }, 2000)
+            }, 1500)
         }
     }
 
@@ -207,7 +214,9 @@ export default class Memory extends Application{
     }
 
     async startNextRound(){
+        this.colorsElement.innerHTML = "";
         this.colors.forEach(item => {
+            this.colorsElement.appendChild(item.domElem);
             item.domElem.classList.remove("memory-checked");
             item.fixed = false;
         });
@@ -217,9 +226,14 @@ export default class Memory extends Application{
         this.counter = 0;
         this.colorsNumber++;
         this.colorsElement.appendChild(color.domElem);
+        const ready = document.createElement("div");
+        ready.className = "memory-ready";
+        ready.textContent = "Get ready..."
+        this.target.parentElement.appendChild(ready);
         setTimeout(() => {
             color.domElem.addEventListener("choose", this.colorCheck.bind(this));
             this.shuffleColors(this.colorsElement);
+            ready.remove();
         }, 4000);
         console.log(this.stats);
         this.round++;
