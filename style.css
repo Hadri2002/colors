@@ -276,7 +276,7 @@ a{
     
 }
 
-.gradient-diffinput{
+.gradient-diffinput, .memory-diffinput{
   padding: 30px;
 }
 
@@ -678,4 +678,93 @@ a{
 }
 .remix-start button{
   margin: auto;
+}
+
+/* Memory Sequence css*/
+
+.memory-container{
+  text-align: center;
+  padding: 30px;
+  margin: auto;
+}
+
+.memory-colors{
+  width: 80%;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.memory-color{
+  height: 100px;
+  border-radius: 50px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 54px 55px, rgba(0, 0, 0, 0.5) 0px -12px 30px, rgba(0, 0, 0, 0.50) 0px 4px 6px, rgba(0, 0, 0, 0.5) 0px 12px 13px, rgba(0, 0, 0, 0.5) 0px -3px 5px;
+  width: 20%;
+  margin: 2.5%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.memory-color:hover{
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  transform: scale(1.1);
+}
+
+.memory-checked{
+  opacity: 0.8;
+  border: 2px solid white;
+}
+
+.memory-checked:hover{
+  cursor: context-menu;
+  transform: none;
+}
+
+.memory-stats{
+  margin-top: 20px;
+}
+
+.memory-end-container{
+  margin: 40px;
+  text-align: center;
+}
+
+.memory-restart{
+  background-color: #202020;
+  box-shadow:1px 1px 5px 2px #68ffff15;
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 7px 20px;
+  touch-action: manipulation;
+  color: rgb(44, 178, 178);
+  transition: all 0.3s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  width: fit-content;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.memory-restart:hover, .memory-restart:active{
+  color: rgb(71, 255, 246);
+  transition: all 0.3s ease-in;
+}
+
+.memory-ready{
+  position: absolute;
+  top: 2%;
+  left: 27.5%;
+  z-index: 1;
+  width: 45%;
+  text-align: center;
+  padding: 15px;
+  background-color: rgb(188, 201, 213);
+  border-radius: 50px;
+  color: #202020;
+  font-size: 20px;
 }

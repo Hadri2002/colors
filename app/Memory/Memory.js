@@ -63,7 +63,7 @@ export default class Memory extends Application{
         // difficulty chooser
         const difficulty = ['Easy', 'Medium', 'Hard'];
         const radio = document.createElement('div');
-        radio.className="gradient-diffinput";
+        radio.className="memory-diffinput";
         startContainer.appendChild(radio);
 
         for(let diff of difficulty){
