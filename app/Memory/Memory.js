@@ -43,6 +43,8 @@ export default class Memory extends Application{
     }
 
     initStart(){
+
+        // starting page initialization
         this.target.innerHTML = "";
         const startContainer = document.createElement('div');
         this.target.appendChild(startContainer);  
@@ -58,7 +60,7 @@ export default class Memory extends Application{
         startContainer.lastChild.src = "app/Memory/src/memory2.PNG";
         startContainer.lastChild.style.width = "50%";
 
-        //Difficulty chooser
+        // difficulty chooser
         const difficulty = ['Easy', 'Medium', 'Hard'];
         const radio = document.createElement('div');
         radio.className="gradient-diffinput";
@@ -79,7 +81,7 @@ export default class Memory extends Application{
             radio.lastChild.lastChild.textContent = diff;
         }
 
-        //Start button
+        // start button
         startContainer.appendChild(document.createElement('button'));
         startContainer.lastChild.textContent = "Start";
         startContainer.lastChild.addEventListener('click', function(){
@@ -89,6 +91,7 @@ export default class Memory extends Application{
     }
 
     initDom(difficulty){
+        // setting the number of lives depending on the difficulty and initializing all used variables
         if(difficulty === "easy"){
             this.lives = 5;
         }
@@ -103,21 +106,21 @@ export default class Memory extends Application{
         this.counter = 0;
         this.colors = [];
 
+        // initializing the game
         const memoryContainer = document.createElement("div");
         this.target.appendChild(memoryContainer);
         memoryContainer.className = "memory-container";
 
         this.colorsElement = document.createElement("div");
-        console.log(this.colorsElement);
         this.colorsElement.className = "memory-colors";
         memoryContainer.appendChild(this.colorsElement);
-        console.log(this.colorsElement);
 
         this.initColors();
         this.initStats();
         
     }
 
+    // keeping track of the user's stats
     initStats(){
         this.stats = document.createElement("div");
         this.stats.className = "memory-stats";
@@ -134,6 +137,7 @@ export default class Memory extends Application{
         this.stats.appendChild(lives);
     }
 
+    // initializing the default three colors using Color class
     async initColors(){
         for(let i = 0; i < this.colorsNumber; i++){
             const color = new Color(i);
@@ -141,16 +145,19 @@ export default class Memory extends Application{
             this.colors.push(color);
             this.colorsElement.appendChild(color.domElem);
         }
+        // adding a message box for the user
         const ready = document.createElement("div");
         ready.className = "memory-ready";
         ready.textContent = "Get ready..."
         this.target.parentElement.appendChild(ready);
+        // after 4 seconds the colors are shuffled and the turn has started
         setTimeout(() => {
             this.shuffleColors();
             ready.remove();
         }, 4000);
     }
 
+    // initilalizing a new array for the shuffled colors and filling the DOM according to the new order
     shuffleColors(){
         this.colorsElement.innerHTML = "";
         const shuffledColors = [];
@@ -172,28 +179,31 @@ export default class Memory extends Application{
     }
 
     colorCheck(evt){
-        console.log(evt.detail.originalPlace,"counter: ", this.counter)
+        // if the user clicks on the right element the color becomes "unclickable"
         if(evt.detail.originalPlace === this.counter){
             evt.detail.color.fixed = true;
             evt.target.classList.add("memory-checked");
             this.counter++;
         }
+        // otherwise they lose a life point
         else{
             this.lives--;
             this.stats.lastChild.textContent = `Lives remaining: ${this.lives}`;
         }
+        // if they lose all their lives the endscreen is initialized
         if(this.lives === 0){
             this.target.innerHTML = "";
             this.initEnd();
         }
+        // if they click all colors in the right order they advance to the next level
         if(this.counter === this.colorsNumber){
-            console.log("nyertél egy kört hehe", this.colors);
             setTimeout(()=>{
                 this.startNextRound();
             }, 1500)
         }
     }
 
+    // endscreen with stats and restart button
     initEnd(){
         const endContainer = document.createElement("div");
         endContainer.className = "memory-end-container";
@@ -214,11 +224,11 @@ export default class Memory extends Application{
     }
 
     async startNextRound(){
+        // once the next round has started the original order is shown again, this time with a new color
         this.colorsElement.innerHTML = "";
         this.colors.forEach(item => {
             this.colorsElement.appendChild(item.domElem);
             item.domElem.classList.remove("memory-checked");
-            item.fixed = false;
         });
         const color = new Color(this.colorsNumber);
         await color.data;
@@ -230,12 +240,15 @@ export default class Memory extends Application{
         ready.className = "memory-ready";
         ready.textContent = "Get ready..."
         this.target.parentElement.appendChild(ready);
+        // after 4 seconds the colors are shuffled and become clickable once again
         setTimeout(() => {
+            this.colors.forEach(item => {
+                item.fixed = false;
+            });
             color.domElem.addEventListener("choose", this.colorCheck.bind(this));
             this.shuffleColors(this.colorsElement);
             ready.remove();
         }, 4000);
-        console.log(this.stats);
         this.round++;
         this.stats.firstChild.textContent = `Level ${this.round}`;
         this.stats.lastChild.textContent = `Lives remaining: ${this.lives}`;
@@ -277,8 +290,8 @@ class Color{
         }
     }
 
+    // initializing the domElement of the class using the rg values
     async initDom(){
-        console.log("asd");
         let data = await this.data;
         this.domElem = document.createElement('div');
         this.domElem.className = 'memory-color';
@@ -287,6 +300,7 @@ class Color{
         this.domElem.addEventListener('click', this.choose.bind(this));
     }
 
+    // custom event to store the instance of the class and to remove events
     choose() {
         if(this.fixed == false){            
             const eventObj = new CustomEvent('choose', {
