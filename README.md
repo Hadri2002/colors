@@ -157,25 +157,25 @@ A class for the base the application. During initialization the container of the
 * currentColor - the current color of the pencil, it's value is DEFAULT_COLOR by default
 
 
-**InitDom method**
+**InitDom method method**
 * Creates the backbone of the application by initializing the DOM and adds eventListeners to each option field. A default instance of the GridElem class (the drawing board itself) is called.
 
-**addListenersToGrid**
+**addListenersToGrid method**
 * The required eventListeners for painting are added and handled inside this function, so the user can color by dragging and clicking as well.
 
-**changeColor**
+**changeColor method**
 * If the user changes color on the palette, the currentMode is automatically set to default coloring mode and the currentColor is set to the chosen value.
 
-**changeToColor**
+**changeToColor method**
 * This function handles clicking on "Color" button by changing currentMode to normal and currentColor to the value the palette currently holds.
 
-**changeToRandom**
+**changeToRandom method**
 * This function handles clicking on "Random colors" button by changing currentMode to random.
 
-**changeToErase**
+**changeToErase method**
 * This function handles clicking on "Eraser" button by changing currentMode to normal and currentColor to the default clearing color of the class.
 
-**changeMode**
+**changeMode method**
 * Once one of the previously mentioned options are clicked this method is called to handle the css changes on these buttons.
 
 ### GridElem Class
@@ -187,14 +187,60 @@ A class for the grid/drawing board itself, the painting/clearing logic is handle
 * domElem - the HTMLElement of the drawing board, the instance of the class itself, appended to the grid
 * mouseDown - if the mouse is held down it's value is true, otherwise it's false by default
 
-**initDom**
+**initDom method**
 * Creates the grid in the given size by using gridTemplate and stores the grid and it's each and every small cell as well. A mouseDown eventListener is added so the application remembers when it's pressed down.
 
-**paintGrid**
+**paintGrid method**
 * If the mouse is clicked or hovered and pressed down at the same time the function receives the currentMode and currentColor and changes the backgroundColor of the affected small div. If the currentMode is random the backgroundColor will be a randomly generated color.
 
-**clearGrid**
+**clearGrid method**
 * This function changes the backgroundColor of every small div inside the grid to default clearing color of the Paint class thus resetting/clearing the drawing board.
 
-**sendAlert**
+**sendAlert method**
 * If the size limit has been exceeded an alert is sent to the user to use a valid value.
+
+## Sequence memory
+### Premise
+Test your sequence memory! Click the shuffled color boxes in the original order to win in this color themed sequence memory mini game.
+
+### Memory class
+A class to handle the logic for the memory game, during initialization we'll see the whole application using multiple functions.
+
+**initStart method**
+This method constructs the "home page" of the application, the user can choose a difficulty here. Once it's chosen the main game initialization begins.
+
+**initDom method**
+This function initializes all the required values and displays them on the screen.
+
+**initStats method**
+This function makes sure to keep track of the user's stats.
+
+**initColors method**
+This method initializes the default three colors using Color class and shuffles them after 4 seconds.
+
+**shuffleColors method**
+First a copy of the main colors list is created and then shuffled in order to prevent losing data, then the colors are added to the DOM in the shuffled order.
+
+**colorCheck method**
+Checks if the clicked color is the right one in the current order, if not the user loses a life, if it is then they advance to the next one. If the user clicked all colors in the right order a new turn begins. If they lose all their lives, the game is over.
+
+**initEnd method**
+Displays an endscreen with the users stats and a restart button. If it's clicked the initialization begins all over.
+
+**startNextRound method**
+Once the next round has started the original order is shown again, this time with a new color. After 4 seconds the colors are shuffled and become clickable once again. The specific values are changed appropriately.
+
+### Color class
+Contains the randomly generated color and its rgb values, it's original position.
+
+**getData method**
+Once the data is fetched, it is returned for the constructor.
+
+**fetchData method**
+Using a color api to get data from our randomly generated color.
+
+**initDom method**
+Initializing the domElement of the class using the rgb values and applying eventListeners for the custom event.
+
+**choose method**
+Custom event to store the instance of the class and to remove events
