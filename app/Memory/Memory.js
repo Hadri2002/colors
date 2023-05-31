@@ -138,10 +138,9 @@ export default class Memory extends Application{
     }
 
     // initializing the default three colors using Color class
-    async initColors(){
+    initColors(){
         for(let i = 0; i < this.colorsNumber; i++){
             const color = new Color(i);
-            await color.data;
             this.colors.push(color);
             this.colorsElement.appendChild(color.domElem);
         }
@@ -223,7 +222,7 @@ export default class Memory extends Application{
         restart.addEventListener("click", this.init.bind(this));
     }
 
-    async startNextRound(){
+    startNextRound(){
         // once the next round has started the original order is shown again, this time with a new color
         this.colorsElement.innerHTML = "";
         this.colors.forEach(item => {
@@ -231,7 +230,6 @@ export default class Memory extends Application{
             item.domElem.classList.remove("memory-checked");
         });
         const color = new Color(this.colorsNumber);
-        await color.data;
         this.colors.push(color);
         this.counter = 0;
         this.colorsNumber++;
@@ -259,44 +257,19 @@ export default class Memory extends Application{
 class Color{
     constructor(originalPlace){
         this.originalPlace = originalPlace;
-        // this.data contains the randomly generated color and its rgb values
-        this.data = this.getData();
         this.fixed = false;
         this.initDom();
     }
-
-    async getData(){
-        let data = await this.fetchData();
-        // once the data is fetched, it is returned for the constructor
-        return data;
-    }
  
-    async fetchData(){
-        try{
-            let red = Math.floor(Math.random() * 256)
-            let green = Math.floor(Math.random() * 256)
-            let blue = Math.floor(Math.random() * 256)
-            
-            // using a color api to get data from our randomly generated color
-            const apiUrl = `https://www.thecolorapi.com/id?rgb=${red},${green},${blue}&format=json`;
-            let response = await fetch(apiUrl);
-            if(response.ok){
-                let jsonResponse = await response.json();
-                return jsonResponse;
-            }
-        }
-        catch(err){
-            console.error(err);
-        }
-    }
 
-    // initializing the domElement of the class using the rg values
-    async initDom(){
-        let data = await this.data;
+    // initializing the domElement of the class using the rgb values
+    initDom(){
         this.domElem = document.createElement('div');
         this.domElem.className = 'memory-color';
-        this.domElem.style.backgroundColor = `rgb(${data.rgb.r}, ${data.rgb.g}, ${data.rgb.b})`;
-        //this.domElem.textContent = `${data.name.value}`;
+        let red = Math.floor(Math.random() * 256)
+        let green = Math.floor(Math.random() * 256)
+        let blue = Math.floor(Math.random() * 256)
+        this.domElem.style.backgroundColor = `rgb(${red}, ${green}, ${blue})`;
         this.domElem.addEventListener('click', this.choose.bind(this));
     }
 

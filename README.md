@@ -236,12 +236,6 @@ A class to handle the logic for the memory game, during initialization we'll see
 ### Color class
 * Contains the randomly generated color and its rgb values, it's original position.
 
-**getData method**
-* Once the data is fetched, it is returned for the constructor.
-
-**fetchData method**
-* Using a color api to get data from our randomly generated color.
-
 **initDom method**
 * Initializing the domElement of the class using the rgb values and applying eventListeners for the custom event.
 
