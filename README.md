@@ -203,6 +203,9 @@ A class for the grid/drawing board itself, the painting/clearing logic is handle
 ### Premise
 Test your sequence memory! Click the shuffled color boxes in the original order to win in this color themed sequence memory mini game.
 
+![memory2](https://github.com/Hadri2002/colors/assets/93374277/eec3d185-373d-4574-bfb5-2fe0042f74ef)
+
+
 ### Memory class
 A class to handle the logic for the memory game, during initialization we'll see the whole application using multiple functions.
 
