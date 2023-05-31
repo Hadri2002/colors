@@ -207,40 +207,40 @@ Test your sequence memory! Click the shuffled color boxes in the original order 
 A class to handle the logic for the memory game, during initialization we'll see the whole application using multiple functions.
 
 **initStart method**
-This method constructs the "home page" of the application, the user can choose a difficulty here. Once it's chosen the main game initialization begins.
+* This method constructs the "home page" of the application, the user can choose a difficulty here. Once it's chosen the main game initialization begins.
 
 **initDom method**
-This function initializes all the required values and displays them on the screen.
+* This function initializes all the required values and displays them on the screen.
 
 **initStats method**
-This function makes sure to keep track of the user's stats.
+* This function makes sure to keep track of the user's stats.
 
 **initColors method**
-This method initializes the default three colors using Color class and shuffles them after 4 seconds.
+* This method initializes the default three colors using Color class and shuffles them after 4 seconds.
 
 **shuffleColors method**
-First a copy of the main colors list is created and then shuffled in order to prevent losing data, then the colors are added to the DOM in the shuffled order.
+* First a copy of the main colors list is created and then shuffled in order to prevent losing data, then the colors are added to the DOM in the shuffled order.
 
 **colorCheck method**
-Checks if the clicked color is the right one in the current order, if not the user loses a life, if it is then they advance to the next one. If the user clicked all colors in the right order a new turn begins. If they lose all their lives, the game is over.
+* Checks if the clicked color is the right one in the current order, if not the user loses a life, if it is then they advance to the next one. If the user clicked all colors in the right order a new turn begins. If they lose all their lives, the game is over.
 
 **initEnd method**
-Displays an endscreen with the users stats and a restart button. If it's clicked the initialization begins all over.
+* Displays an endscreen with the users stats and a restart button. If it's clicked the initialization begins all over.
 
 **startNextRound method**
-Once the next round has started the original order is shown again, this time with a new color. After 4 seconds the colors are shuffled and become clickable once again. The specific values are changed appropriately.
+* Once the next round has started the original order is shown again, this time with a new color. After 4 seconds the colors are shuffled and become clickable once again. The specific values are changed appropriately.
 
 ### Color class
-Contains the randomly generated color and its rgb values, it's original position.
+* Contains the randomly generated color and its rgb values, it's original position.
 
 **getData method**
-Once the data is fetched, it is returned for the constructor.
+* Once the data is fetched, it is returned for the constructor.
 
 **fetchData method**
-Using a color api to get data from our randomly generated color.
+* Using a color api to get data from our randomly generated color.
 
 **initDom method**
-Initializing the domElement of the class using the rgb values and applying eventListeners for the custom event.
+* Initializing the domElement of the class using the rgb values and applying eventListeners for the custom event.
 
 **choose method**
-Custom event to store the instance of the class and to remove events
+* Custom event to store the instance of the class and to remove events
