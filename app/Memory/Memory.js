@@ -31,7 +31,7 @@ export default class Memory extends Application{
     /**
      * @type {Number}
      */
-    static round = 1;
+    round = 1;
 
     init(){
         super.init();
@@ -39,6 +39,7 @@ export default class Memory extends Application{
     }
 
     initStart(){
+        this.target.innerHTML = "";
         const startContainer = document.createElement('div');
         this.target.appendChild(startContainer);  
         startContainer.className = "chooser";
@@ -50,7 +51,8 @@ export default class Memory extends Application{
         startContainer.lastChild.textContent = "Click the shuffled color boxes in the original order to win in this color themed memory sequence mini game.";
 
         startContainer.append(document.createElement("img"));
-        startContainer.lastChild.src = "app/Gradient/src/gradient.PNG";
+        startContainer.lastChild.src = "app/Memory/src/memory2.PNG";
+        startContainer.lastChild.style.width = "50%";
 
         //Difficulty chooser
         const difficulty = ['Easy', 'Medium', 'Hard'];
@@ -76,7 +78,7 @@ export default class Memory extends Application{
         //Start button
         startContainer.appendChild(document.createElement('button'));
         startContainer.lastChild.textContent = "Start";
-        startContainer.lastChild.addEventListener('click', function(evt){
+        startContainer.lastChild.addEventListener('click', function(){
             this.target.innerHTML = "";
             this.initDom(radio.querySelector(('input[name="difficulty"]:checked')).id);
         }.bind(this));
@@ -93,16 +95,13 @@ export default class Memory extends Application{
             this.lives = 1;
         }
         this.round = 1;
+        Memory.colorsNumber = 3;
+        Memory.counter = 0;
+        Memory.colors = [];
 
         const memoryContainer = document.createElement("div");
         this.target.appendChild(memoryContainer);
         memoryContainer.className = "memory-container";
-
-        /*memoryContainer.appendChild(document.createElement("h1"));
-        memoryContainer.lastChild.textContent = "Memory Sequence Game";
-
-        memoryContainer.appendChild(document.createElement("div"));
-        memoryContainer.lastChild.textContent = "Click the shuffled color boxes in the original order to win in this color themed memory sequence mini game.";*/
 
         this.colorsElement = document.createElement("div");
         console.log(this.colorsElement);
@@ -173,13 +172,33 @@ export default class Memory extends Application{
         }
         if(this.lives === 0){
             this.target.innerHTML = "";
+            this.initEnd();
         }
         if(Memory.counter === Memory.colorsNumber){
             console.log("nyertél egy kört hehe");
             setTimeout(()=>{
                 this.startNextRound();
-            }, 4000)
+            }, 2000)
         }
+    }
+
+    initEnd(){
+        const endContainer = document.createElement("div");
+        endContainer.className = "memory-end-container";
+        this.target.appendChild(endContainer);
+
+        endContainer.appendChild(document.createElement("h1"));
+        endContainer.lastChild.textContent = "Game Over";
+
+        const endScore = document.createElement("h2");
+        endScore.textContent = `You made it to level ${this.round}`;
+        endContainer.appendChild(endScore);
+
+        const restart = document.createElement("div");
+        restart.textContent = "Restart";
+        restart.className = "memory-restart";
+        endContainer.appendChild(restart);
+        restart.addEventListener("click", this.init.bind(this));
     }
 
     async startNextRound(){
@@ -245,7 +264,7 @@ class Color{
         this.domElem = document.createElement('div');
         this.domElem.className = 'memory-color';
         this.domElem.style.backgroundColor = `rgb(${data.rgb.r}, ${data.rgb.g}, ${data.rgb.b})`;
-        this.domElem.textContent = `${data.name.value}`;
+        //this.domElem.textContent = `${data.name.value}`;
         this.domElem.addEventListener('click', this.choose.bind(this));
     }
 

@@ -524,6 +524,7 @@ a{
 .memory-color{
   height: 100px;
   border-radius: 50px;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 54px 55px, rgba(0, 0, 0, 0.5) 0px -12px 30px, rgba(0, 0, 0, 0.50) 0px 4px 6px, rgba(0, 0, 0, 0.5) 0px 12px 13px, rgba(0, 0, 0, 0.5) 0px -3px 5px;
   width: 20%;
   margin: 2.5%;
   display: flex;
@@ -549,4 +550,30 @@ a{
 
 .memory-stats{
   margin-top: 20px;
+}
+
+.memory-end-container{
+  margin: 40px;
+  text-align: center;
+}
+
+.memory-restart{
+  background-color: #202020;
+  box-shadow:1px 1px 5px 2px #68ffff15;
+  border-radius: 50px;
+  cursor: pointer;
+  padding: 7px 20px;
+  touch-action: manipulation;
+  color: rgb(44, 178, 178);
+  transition: all 0.3s ease-in;
+  user-select: none;
+  -webkit-user-select: none;
+  width: fit-content;
+  margin: auto;
+  margin-top: 30px;
+}
+
+.memory-restart:hover, .memory-restart:active{
+  color: rgb(71, 255, 246);
+  transition: all 0.3s ease-in;
 }
