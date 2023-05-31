@@ -405,20 +405,20 @@ a{
 .guess-color{
   display: flexbox;
   width: 50vw;
-  height: 72vh;
+  height: 68vh;
 }
 .guess-guesses{
   display: flexbox;
   float: right;
   width: 50vw;
-  height: 72vh;
+  height: 68vh;
 }
 
 .guess-input{
   display: flex;
   justify-content: center;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 .guess-container{
