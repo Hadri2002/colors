@@ -505,15 +505,48 @@ a{
 
 /* Memory Sequence css*/
 
+.memory-container{
+  text-align: center;
+  padding: 30px;
+  margin: auto;
+}
+
 .memory-colors{
+  width: 80%;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 .memory-color{
   height: 100px;
-  width: 300px;
+  border-radius: 50px;
+  width: 20%;
+  margin: 2.5%;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.memory-color:hover{
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  transform: scale(1.1);
+}
+
+.memory-checked{
+  opacity: 0.8;
+  border: 2px solid white;
+}
+
+.memory-checked:hover{
+  cursor: context-menu;
+  transform: none;
+}
+
+.memory-stats{
+  margin-top: 20px;
 }
